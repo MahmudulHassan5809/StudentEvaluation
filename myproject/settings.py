@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_cleanup',
     'accounts',
+    'session',
+    'programs',
+    'course',
     'pages'
 ]
 

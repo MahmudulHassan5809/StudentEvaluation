@@ -34,9 +34,9 @@ admin.site.register(Profile,ProfileAdmin)
 
 
 class TeacherAdmin(admin.ModelAdmin):
-	list_display = ["teacher_name","phone_number","user_email"]
-	search_fields = ('teacher__username','teacher__user_profile__phone_number','teacher__user_profile__email',)
-	list_filter = ['teacher__user_profile__active']
+	list_display = ["teacher_name","department","phone_number","user_email"]
+	search_fields = ('teacher__username','department__department_name','teacher__user_profile__phone_number','teacher__email',)
+	list_filter = ['teacher__user_profile__active','department']
 	list_per_page = 20
 
 

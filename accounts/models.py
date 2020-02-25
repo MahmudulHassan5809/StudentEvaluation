@@ -2,6 +2,7 @@ from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
+from programs.models import Department
 
 # Create your models here.
 class Profile(models.Model):
@@ -26,6 +27,7 @@ class Profile(models.Model):
 
 class Teacher(models.Model):
     teacher  = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_teacher')
+    department = models.ForeignKey(Department,on_delete=models.CASCADE,related_name='department_teacher')
 
     def __str__(self):
         return self.teacher.username
