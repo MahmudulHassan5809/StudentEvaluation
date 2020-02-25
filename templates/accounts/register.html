@@ -1,0 +1,78 @@
+{% extends "landing_base.html" %}
+
+{% block title %}
+{{title}}
+{% endblock title %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container py-5">
+	<div class="row">
+		<div class="col-md-12">
+			
+			<div class="row">
+				<div class="col-md-6 mx-auto">
+					<div class="card">
+						<div class="card-header bg-primary text-center">
+							<img src="{% static 'front/img/logo-2.png' %}" alt="" width="60px">
+						</div>
+						<div class="card-body">
+							<form method="POST" action="{% url 'accounts:register' %}" novalidate>
+								{% csrf_token %}
+								<div class="form-row">
+									<div class="form-group col-md-6 mb-0">
+										{{ signup_form.username|as_crispy_field }}
+									</div>
+									<div class="form-group col-md-6 mb-0">
+										{{ signup_form.email|as_crispy_field }}
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-group col-md-6 mb-0">
+										{{ signup_form.first_name|as_crispy_field }}
+									</div>
+									<div class="form-group col-md-6 mb-0">
+										{{ signup_form.last_name|as_crispy_field }}
+									</div>
+								</div>
+								{{ signup_form.address|as_crispy_field }}
+								{{ signup_form.bio|as_crispy_field }}
+								
+								<div class="form-row">
+									<div class="form-group col-md-6 mb-0">
+										{{ signup_form.user_type|as_crispy_field }}
+									</div>
+									<div class="form-group col-md-6 mb-0">
+										{{ signup_form.phone_number|as_crispy_field }}
+									</div>
+									
+								</div>
+
+								<div class="form-row">
+									<div class="form-group col-md-6 mb-0">
+										{{ signup_form.password1|as_crispy_field }}
+									</div>
+									<div class="form-group col-md-6 mb-0">
+										{{ signup_form.password2|as_crispy_field }}
+									</div>
+									
+								</div>
+								
+								<button type="submit" class="btn btn-primary">Sign in</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/row-->
+
+		</div>
+		<!--/col-->
+	</div>
+	<!--/row-->
+</div>
+<!--/container-->
+{% endblock content %}

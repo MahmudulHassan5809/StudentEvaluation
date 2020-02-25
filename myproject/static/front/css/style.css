@@ -1,0 +1,15 @@
+/* landing Page css*/
+.masthead {
+	height: 100vh;
+	min-height: 500px;
+	background-image: url('/static/front/img/landing.jpg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.masthead p{
+	font-size: 20px;
+}
+
+/* end Landing Page css*/
