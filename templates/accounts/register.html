@@ -40,6 +40,15 @@
 								</div>
 								{{ signup_form.address|as_crispy_field }}
 								{{ signup_form.bio|as_crispy_field }}
+
+								<div class="form-row">
+									<div class="form-group col-md-6 mb-0">
+										{{ signup_form.faculty|as_crispy_field }}
+									</div>
+									<div class="form-group col-md-6 mb-0">
+										{{ signup_form.department|as_crispy_field }}
+									</div>
+								</div>
 								
 								<div class="form-row">
 									<div class="form-group col-md-6 mb-0">

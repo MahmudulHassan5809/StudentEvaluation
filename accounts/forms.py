@@ -2,6 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from programs.models import Faculty,Department
 
 class SignUpForm(UserCreationForm):
 	USERTYPE_CHOICES = (
@@ -13,10 +14,13 @@ class SignUpForm(UserCreationForm):
 	address = forms.CharField(widget=forms.Textarea)
 	bio = forms.CharField(widget=forms.Textarea)
 	user_type = forms.ChoiceField(choices = USERTYPE_CHOICES) 
+	department = forms.ModelChoiceField(queryset=Department.objects.all())
+	faculty = forms.ModelChoiceField(queryset=Faculty.objects.all())
 
 	class Meta:
 		model = User
 		fields = ('username', 'first_name','last_name', 'email','phone_number','bio','address','user_type', 'password1', 'password2', )
+		
 	
 	def __init__(self, *args, **kwargs):
 		super(SignUpForm, self).__init__(*args, **kwargs)
@@ -25,6 +29,9 @@ class SignUpForm(UserCreationForm):
 			self.fields['email'].required = True
 			self.fields['first_name'].required = True
 			self.fields['last_name'].required = True
+
+
+
 
 
 

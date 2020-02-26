@@ -2,7 +2,7 @@ from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
-from programs.models import Department
+from programs.models import Department,Faculty
 
 # Create your models here.
 class Profile(models.Model):
@@ -16,7 +16,7 @@ class Profile(models.Model):
     phone_number = models.CharField(max_length=15,default='01xxxxxxxxxx')
     address      = models.TextField(default='Your Address')
     bio      = models.TextField(default='Your Bio')
-    user_type = models.CharField(max_length=10, choices=USERTYPE_CHOICES, default="0")
+    user_type = models.CharField(max_length=10, choices=USERTYPE_CHOICES)
     active = models.BooleanField(default=False)
 
 
@@ -28,6 +28,7 @@ class Profile(models.Model):
 class Teacher(models.Model):
     teacher  = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_teacher')
     department = models.ForeignKey(Department,on_delete=models.CASCADE,related_name='department_teacher')
+    faculty = models.ForeignKey(Faculty,on_delete=models.CASCADE,related_name='faculty_teacher')
 
     def __str__(self):
         return self.teacher.username
@@ -35,6 +36,8 @@ class Teacher(models.Model):
 
 class Student(models.Model):
     student  = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_student')
+    department = models.ForeignKey(Department,on_delete=models.CASCADE,related_name='department_student')
+    faculty = models.ForeignKey(Faculty,on_delete=models.CASCADE,related_name='faculty_student')
 
     def __str__(self):
         return self.student.username
