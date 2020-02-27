@@ -17,6 +17,7 @@ class Profile(models.Model):
     address      = models.CharField(default='Your Address',max_length=255)
     bio      = models.TextField(default='Your Bio')
     user_type = models.CharField(max_length=10, choices=USERTYPE_CHOICES)
+    email_confirmed = models.BooleanField(default=False)
     active = models.BooleanField(default=False)
 
 

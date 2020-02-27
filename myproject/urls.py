@@ -8,6 +8,7 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('accounts/', include('accounts.urls',namespace='accounts')),
     path('', include('pages.urls',namespace='pages')),
+    
 ]
 
 

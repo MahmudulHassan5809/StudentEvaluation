@@ -165,3 +165,8 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mahmudul.hassan240@gmail.com'
+EMAIL_HOST_PASSWORD = 'hmcdhmoeeajppomw'
+EMAIL_PORT = 587

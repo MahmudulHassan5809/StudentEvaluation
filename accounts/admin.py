@@ -8,7 +8,7 @@ from programs.models import Department,Faculty
 
 
 class ProfileAdmin(admin.ModelAdmin):
-	list_display = ["profile_name","user_type","phone_number","address","user_email","profile_pic","active","view_teacher_or_student"]
+	list_display = ["profile_name","email_confirmed","user_type","phone_number","address","user_email","profile_pic","active","view_teacher_or_student"]
 	search_fields = ('user__username','phone_number',)
 	list_filter = ['phone_number','user__email']
 	list_editable = ['active']

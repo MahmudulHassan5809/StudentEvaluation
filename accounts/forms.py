@@ -22,11 +22,11 @@ class SignUpForm(UserCreationForm):
 		fields = ('username', 'first_name','last_name', 'email','phone_number','bio','address','user_type', 'password1', 'password2', )
 	
 
-	def clean_email(self):
-		email = self.cleaned_data.get('email')
-		if not email.endswith('.edu'):
-			raise forms.ValidationError("Only .edu email addresses allowed")
-		return email	
+	# def clean_email(self):
+	# 	email = self.cleaned_data.get('email')
+	# 	if not email.endswith('indstate.edu'):
+	# 		raise forms.ValidationError("Only indstate.edu email addresses allowed")
+	# 	return email	
 	
 	def __init__(self, *args, **kwargs):
 		super(SignUpForm, self).__init__(*args, **kwargs)
