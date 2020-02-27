@@ -1,0 +1,31 @@
+Student Evaluation App
+
+Intro:
+Through This This Teacher Can Evaluate Students.Can rate the students & Evaluate them by providing some answers to specific question.
+
+Below are the description till now what i have completed 
+
+Different Types Of User :
+In this application we have Three kinds of user 
+	1. Teacher
+	2. Student
+	3. Admin (superadmin,staff)
+
+
+Authentication :
+	First user have to register by providing some info about them.Then The need to verify their email.User can register as a student or teacher.In registration they must select the faculty and department.After completing all the required fields and verfying their email super admin will active their account.Then they can access their dashboard.After registration a one to one profile will be created to every user.
+
+SuperAdmin Or Staff:
+	spuer admin can do everything.
+
+	Super admin can create semester.At a time only on semester can be active.then they need to create faculty and assign the department under faculty.
+
+	After creating the fculty and department they can create course and can assign many or single teacher to specific course.
+
+
+Future Work:
+	1.Complete The Teacher Dashbaord 
+	2. Complete The Student Dashbord 
+	3.And Add More Feature
+
+I have attached the some screen shot image.
