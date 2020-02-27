@@ -1,44 +1,52 @@
 {% extends "landing_base.html" %}
 
+{% load static %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'front/css/landing_page.css' %}">
+{% endblock style %}
 
 {% block title %}
 {{title}}
 {% endblock title %}
 
-{% load static %}
+
 
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container py-5">
-	<div class="row">
-		<div class="col-md-12">
-			
-			<div class="row">
-				<div class="col-md-6 mx-auto">
-					<div class="card">
-						<div class="card-header bg-primary text-center">
-							<img src="{% static 'front/img/logo-2.png' %}" alt="" width="60px">
-						</div>
-						<div class="card-body">
-							{% include 'partials/_alert.html' %}
-							<form method="post" novalidate>
-								{% csrf_token %}
-								
-								{{login_form|crispy}}
-								
-								<button type="submit" class="btn btn-primary">Log in</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--/row-->
+<div class="register-body" style="height:100vh;">
+	<div class="container py-5">
+		<div class="row">
+			<div class="col-md-8 login-box mx-auto">
+				<div class="login-key">
+                    <img src="{% static 'front/img/logo-2.png' %}" alt="" width="60px">
+                </div>
+                
+                <div class="login-title">
+                    Login
+                </div>
 
+                <div class="col-lg-12 login-form">
+                    <div class="col-lg-12 login-form">
+						<form method="POST" action="{% url 'accounts:login' %}" novalidate>
+                        	{% csrf_token %}
+                        	{{ login_form.username|as_crispy_field }}
+                        	{{ login_form.password|as_crispy_field }}
+
+                        	<div class="loginbttm">
+			                    <div class="login-btm login-button">
+			                        <button type="submit" class="btn btn-outline-primary">Login</button>
+			                    </div>
+			                </div>
+                        </form>
+                    </div>
+                </div>
+
+                
+			</div>
 		</div>
-		<!--/col-->
 	</div>
-	<!--/row-->
 </div>
-<!--/container-->
 {% endblock content %}
+

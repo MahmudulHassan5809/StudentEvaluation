@@ -10,16 +10,21 @@
     <title>{% block title %}{% endblock title %}</title>
 
     {% include 'partials/_css.html' %}
+
+    {% block style %}
+        
+    {% endblock style %}
 </head>
 <body>
-    
-	{% include 'partials/_landing_nav.html' %}
-   	
-   	{% block content %}
-   		    
-   	{% endblock content %}	
+        
+        {% include 'partials/_landing_nav.html' %} 
 
-    {% include 'partials/_js.html' %} 
+        {% block content %}
+              
+        {% endblock content %}  
+
+        {% include 'partials/_js.html' %}
+     
     
 </body>
 </html>

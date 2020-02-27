@@ -1,15 +1,12 @@
 {% extends "landing_base.html" %}
 
+{% load static %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'front/css/landing_page.css' %}">
+{% endblock style %}
 
 {% block content %}
-   <header class="masthead">
-  <div class="container h-100">
-    <div class="row h-100 align-items-center">
-      <div class="col-12 text-center ml-5">
-        <h1 class="font-weight-light text-white">Welcome To Our Site</h1>
-        <p class="lead text-white ml-5">A Great App To Create Connection Between Students & Teacher.</p>
-      </div>
-    </div>
-  </div>
-</header>
+	{% include 'partials/_landing_header.html' %}   
 {% endblock content %}

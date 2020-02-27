@@ -14,7 +14,7 @@ class Profile(models.Model):
     user         = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user_profile')
     profile_pic  = models.ImageField(upload_to="profile/%Y/%m/%d/",default="profile/default.png")
     phone_number = models.CharField(max_length=15,default='01xxxxxxxxxx')
-    address      = models.TextField(default='Your Address')
+    address      = models.CharField(default='Your Address',max_length=255)
     bio      = models.TextField(default='Your Bio')
     user_type = models.CharField(max_length=10, choices=USERTYPE_CHOICES)
     active = models.BooleanField(default=False)

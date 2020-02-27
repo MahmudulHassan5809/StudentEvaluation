@@ -11,8 +11,8 @@ class SignUpForm(UserCreationForm):
 	)
 
 	phone_number = forms.CharField()
-	address = forms.CharField(widget=forms.Textarea)
-	bio = forms.CharField(widget=forms.Textarea)
+	address = forms.CharField()
+	bio = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 40}))
 	user_type = forms.ChoiceField(choices = USERTYPE_CHOICES) 
 	department = forms.ModelChoiceField(queryset=Department.objects.all())
 	faculty = forms.ModelChoiceField(queryset=Faculty.objects.all())
@@ -20,7 +20,13 @@ class SignUpForm(UserCreationForm):
 	class Meta:
 		model = User
 		fields = ('username', 'first_name','last_name', 'email','phone_number','bio','address','user_type', 'password1', 'password2', )
-		
+	
+
+	def clean_email(self):
+		email = self.cleaned_data.get('email')
+		if not email.endswith('.edu'):
+			raise forms.ValidationError("Only .edu email addresses allowed")
+		return email	
 	
 	def __init__(self, *args, **kwargs):
 		super(SignUpForm, self).__init__(*args, **kwargs)

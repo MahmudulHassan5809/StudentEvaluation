@@ -70,7 +70,7 @@ class LoginView(View):
 		}
 		return render(request,'accounts/login.html',context)
 
-	@method_decorator(active_user_required())
+	
 	def post(self,request,*args,**kwargs):
 		form = LoginForm(request.POST)
 		context = {
@@ -80,15 +80,19 @@ class LoginView(View):
 		if form.is_valid():
 			username = form.cleaned_data.get('username')
 			password = form.cleaned_data.get('password')
-			user = authenticate(request, username=username, password=password)
-			if user is not None:
-				login(request, user)
-				if user.user_profile.user_type == '0':
-					return redirect('accounts:teacher_dashboard')
-				elif user.user_profile.user_type == '1':
-					return redirect('accounts:student_dashboard')
+			if username != '' and password != '':
+				user = authenticate(request, username=username, password=password)
+				if user is not None:
+					login(request, user)
+					if user.user_profile.user_type == '0':
+						return redirect('accounts:teacher_dashboard')
+					elif user.user_profile.user_type == '1':
+						return redirect('accounts:student_dashboard')
+				else:
+					messages.error(request, ('Invalid Credentials'))
+					return redirect('accounts:login')
 			else:
-				messages.error(request, ('Invalid Credentials'))
+				messages.error(request, ('Please Input All The Fields'))
 				return redirect('accounts:login')
 		else:
 			return render(request,'accounts/login.html',context)
