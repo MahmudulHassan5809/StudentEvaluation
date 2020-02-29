@@ -144,3 +144,13 @@ class StudentDashboard(AictiveStudentRequiredMixin,View):
 			'title' : 'Student Dashboard'
 		}
 		return render(request,'accounts/teacher/student_dashboard.html',context)
+
+
+
+
+
+class LogoutView(AictiveUserRequiredMixin,View):
+	def get(self,request,*args,**kwargs):
+		logout(request)
+		messages.success(request, ('You Have Been Logged Out..'))
+		return redirect('accounts:login')

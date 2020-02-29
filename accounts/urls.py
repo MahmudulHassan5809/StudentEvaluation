@@ -13,4 +13,7 @@ urlpatterns = [
     path('student/dashboard/', views.StudentDashboard.as_view(), name="student_dashboard"),
 
 	path('activate/<uidb64>/<token>',views.activate, name='activate'),
+
+
+	path('logout/',views.LogoutView.as_view(), name='logout'),
 ]
