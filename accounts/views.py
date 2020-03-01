@@ -137,6 +137,18 @@ class TeacherDashboard(AictiveTeacherRequiredMixin,View):
 		return render(request,'accounts/teacher/teacher_dashboard.html',context)
 
 
+class TeacherCourses(AictiveTeacherRequiredMixin,View):
+	def get(self,request,*args,**kwargs):
+		teacher = get_object_or_404(Teacher,teacher=request.user.id)
+		teacher_courses = request.user.user_teacher.teacher_courses.filter(teacher=teacher)
+
+		context = {
+			'title' : 'My Courses',
+			'teacher_courses' : teacher_courses
+		}
+		return render(request,'accounts/teacher/teacher_courses.html',context)	
+
+
 
 class StudentDashboard(AictiveStudentRequiredMixin,View):
 	def get(self,request,*args,**kwargs):

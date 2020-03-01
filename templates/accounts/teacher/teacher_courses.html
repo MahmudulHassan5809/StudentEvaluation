@@ -1,0 +1,38 @@
+{% extends "dash_base.html" %}
+
+{% block title %}
+{{title}}
+{% endblock title %}
+
+
+{% block maincontent %}
+<div class="container m-2 p-2">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				{% for course in teacher_courses %}
+				<div class="col-md-4">
+					<div class="card">
+						<img class="card-img-top" src="{{course.course.course_image.url}}">
+						<div class="card-body">
+							<h4 class="card-title">{{course.course.course_name}}</h4>
+							<p class="card-text">
+								Course Credit : {{course.course.course_credit}} <br>
+								Department : {{course.course.department.department_name}} <br>
+								Faculty : {{ course.course.department.faculty.faculty_name }}	 
+							</p>
+							<a href="#" class="card-link btn-sm btn btn-info">Details</a>
+						</div>
+						<div class="card-footer">
+							<small class="text-dark">Semester {{course.course.semester.semester_full_name}}</small>
+						</div>
+					</div>
+				</div>	
+				{% endfor %}
+				
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock maincontent %}
+

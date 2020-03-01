@@ -1,19 +1,19 @@
 {% load static %}
 <nav id="sidebar">
-            <div class="sidebar-header">
-                <h3>Bootstrap Sidebar</h3>
-                <strong>BS</strong>
+            <div class="sidebar-header text-center">
+                <h6>Welcome {{user.get_full_name}}</h6>
+                <img src="{{user.user_profile.profile_pic.url}}" alt="" width="60px" class="rounded-circle text-center">
             </div>
 
             <ul class="list-unstyled components">
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-home"></i>
-                        Home
+                        <i class="fa fa-home"></i>
+                        Options
                     </a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="#">Home 1</a>
+                            <a href="{% url 'accounts:teacher_courses' %}">My Courses</a>
                         </li>
                         <li>
                             <a href="#">Home 2</a>
@@ -65,11 +65,6 @@
             </ul>
 
             <ul class="list-unstyled CTAs">
-                <li>
-                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-                </li>
-                <li>
-                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
-                </li>
+               
             </ul>
         </nav>
