@@ -368,6 +368,11 @@ a.article:hover {
     transition: all 0.3s;
 }
 
+.container{
+    max-width: 95% !important;
+
+}
+
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */

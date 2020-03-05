@@ -1,0 +1,41 @@
+{% extends "dash_base.html" %}
+
+{% block title %}
+{{title}}
+{% endblock title %}
+
+{% block sidebar %}
+    {% include '../../partials/teacher/_sidebar.html' %}
+{% endblock sidebar %}
+
+
+{% block maincontent %}
+    <div class="container m-2 p-2">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h3 class="text-center">Students List</h3>
+                <hr>
+
+                    <table class="table table-hover table-inverse">
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Evaluate Student</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in all_students.all %}
+                            <tr>
+                                <td>{{student.student.student.get_full_name}}</td>
+                                <td>
+                                    <a class="btn btn-sm btn-outline-info" href="">Evaluate</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+            </div>
+        </div>
+    </div>
+{% endblock maincontent %}

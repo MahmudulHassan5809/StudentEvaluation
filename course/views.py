@@ -23,6 +23,20 @@ class TeacherCourses(AictiveTeacherRequiredMixin, View):
         return render(request, 'accounts/teacher/teacher_courses.html', context)
 
 
+class TeacherCourseDetails(AictiveTeacherRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        course_id = kwargs.get('id')
+        course_obj = get_object_or_404(Course, id=course_id)
+        all_students = StudentCourse.objects.filter(courses=course_obj)
+
+        context = {
+            'title': course_obj.course_name,
+            'all_students': all_students
+        }
+
+        return render(request, 'accounts/teacher/teacher_course_details.html', context)
+
+
 class StudentCourseSelect(AictiveStudentRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         course_select_form = CourseChoiceForm()
@@ -30,8 +44,11 @@ class StudentCourseSelect(AictiveStudentRequiredMixin, View):
 
         student_obj = get_object_or_404(Student, student=request.user.id)
 
-        my_courses = StudentCourse.objects.get(
-            student=student_obj, semester=active_semester)
+        try:
+            my_courses = StudentCourse.objects.get(
+                student=student_obj, semester=active_semester)
+        except Exception as e:
+            my_courses = None
 
         context = {
             'title': 'Select Course',
@@ -46,8 +63,12 @@ class StudentCourseSelect(AictiveStudentRequiredMixin, View):
 
         active_semester = Semester.objects.filter(active=True).first()
         student_obj = get_object_or_404(Student, student=request.user.id)
-        my_courses = StudentCourse.objects.get(
-            student=student_obj, semester=active_semester)
+
+        try:
+            my_courses = StudentCourse.objects.get(
+                student=student_obj, semester=active_semester)
+        except Exception as e:
+            my_courses = None
 
         context = {
             'title': 'Select Course',

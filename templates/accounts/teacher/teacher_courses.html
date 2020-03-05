@@ -25,7 +25,7 @@
 								Department : {{course.course.department.department_name}} <br>
 								Faculty : {{ course.course.department.faculty.faculty_name }}
 							</p>
-							<a href="#" class="card-link btn-sm btn btn-info">Details</a>
+							<a href="{% url 'course:teacher_course_details' course.course.id %}" class="card-link btn-sm btn btn-info">Course Details</a>
 						</div>
 						<div class="card-footer">
 							<small class="text-dark">Semester {{course.course.semester.semester_full_name}}</small>
