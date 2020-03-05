@@ -152,13 +152,25 @@ class StudentDashboard(AictiveStudentRequiredMixin, View):
 
 class MyProfile(AictiveUserRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        update_profile = UpdateProfile(request=request)
+        update_profile_form = UpdateProfile(request=request)
         context = {
             'title': 'My Profile',
-            'update_profile': update_profile
+            'update_profile_form': update_profile_form
 
         }
         return render(request, 'accounts/my_profile.html', context)
+
+    def post(self, request, *args, **kwargs):
+        update_profile_form = UpdateProfile(request.POST, request=request)
+        context = {
+            'title': 'My Profile',
+            'update_profile_form': update_profile_form
+        }
+
+        if update_profile_form.is_valid():
+            pass
+        else:
+            return render(request, 'accounts/my_profile.html', context)
 
 
 class LogoutView(AictiveUserRequiredMixin, View):

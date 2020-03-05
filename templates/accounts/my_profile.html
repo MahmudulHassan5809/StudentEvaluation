@@ -74,9 +74,9 @@
             </div>
             <div class="col-md-9">
                 <div class="profile-content">
-                    <form action="">
+                    <form action="{% url 'accounts:my_profile' %}" novalidate method="POST">
                         {% csrf_token %}
-                        {{update_profile|crispy}}
+                        {{update_profile_form|crispy}}
                         <div class="profile-userbuttons">
                             <button type="submit" class="btn btn-success btn-sm">Update Profile</button>
                         </div>
