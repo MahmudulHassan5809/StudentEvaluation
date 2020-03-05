@@ -36,9 +36,17 @@ class StudentCourse(models.Model):
     courses = models.ManyToManyField(Course, related_name='student_courses')
     student = models.ForeignKey(
         Student, on_delete=models.CASCADE, related_name='student_course')
+    semester = models.ForeignKey(
+        Semester, on_delete=models.CASCADE, related_name='semester_student_course')
+    active = models.BooleanField(default=False)
 
     def courses_name(self):
         return ",".join([str(p) for p in self.courses.all()])
+
+    def teachers_name(self):
+        for course in self.courses.all():
+            for course in course.course_teacher.all():
+                return ",".join([str(teacher) for teacher in course.teachers.all()])
 
     def __str__(self):
         return self.student.student.username

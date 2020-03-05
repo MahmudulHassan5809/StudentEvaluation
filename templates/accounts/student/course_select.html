@@ -4,6 +4,8 @@
 
 {% load crispy_forms_tags %}
 
+{% load simpletags %}
+
 {% block title %}
     {{title}}
 {% endblock title %}
@@ -26,6 +28,8 @@
                     {% csrf_token %}
                     {{course_select_form.courses|as_crispy_field}}
 
+                    {{course_select_form.semester|as_crispy_field}}
+
                     <input type="submit" value="Submit" class="btn btn-info btn-block btn-sm">
                 </form>
             </div>
@@ -35,21 +39,36 @@
                         <tr>
                             <th>Course Name</th>
                             <th>Course Teachers</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for course  in my_courses.courses.all %}
+
+                        {% for course  in my_courses.courses.all|active_semester %}
                         <tr>
                             <td>{{course.course_name}}</td>
+                            {% if course.course_teacher.all.count > 0 %}
                             {% for course in course.course_teacher.all %}
                                 <td>
-                                    {% for teacher in course.teachers.all %}
-                                    {{teacher}},
-                                    {% endfor %}
-                                </td>
+
+                                        {% for teacher in course.teachers.all %}
+                                        {{teacher}},
+                                        {% endfor %}
+                               </td>
 
                             {% endfor %}
-
+                            {% else %}
+                                <td>
+                                    No Teacher Selected
+                                </td>
+                            {% endif %}
+                            <td>
+                                {% if  my_courses.active %}
+                                   <i class="fa fa-check text-success"></i>
+                                {% else %}
+                                    <i class="fa fa-times text-danger"></i>
+                                {% endif %}
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>

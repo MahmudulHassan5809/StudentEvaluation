@@ -1,53 +1,55 @@
 {% load static %}
 <nav id="sidebar">
-            <div class="sidebar-header text-center">
-                <h6>Welcome {{user.get_full_name}}</h6>
-                <img src="{{user.user_profile.profile_pic.url}}" alt="" width="60px" class="rounded-circle text-center">
-            </div>
+    <div class="sidebar-header text-center">
+        <h6>Welcome {{user.get_full_name}}</h6>
+        <img src="{{user.user_profile.profile_pic.url}}" alt="" width="60px" class="rounded-circle text-center">
+    </div>
 
-            <ul class="list-unstyled components">
+    <ul class="list-unstyled components">
+        <li>
+            <a href="{% url 'course:student_course_select' %}">
+                <i class="fas fa-briefcase"></i>
+                Select Course
+            </a>
+            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <i class="fas fa-copy"></i>
+                Course
+            </a>
+            <ul class="collapse list-unstyled" id="pageSubmenu">
                 <li>
-                    <a href="{% url 'course:student_course_select' %}">
-                        <i class="fas fa-briefcase"></i>
-                        Select Course
-                    </a>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-copy"></i>
-                        Pages
-                    </a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
-                        <li>
-                            <a href="#">Page 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Page 3</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-image"></i>
-                        Portfolio
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-question"></i>
-                        FAQ
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-paper-plane"></i>
-                        Contact
-                    </a>
-                </li>
-            </ul>
+                   <a href="{% url 'course:student_course_select' %}">
+                    Select Course
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'course:student_previous_course' %}">Previous Course</a>
+            </li>
+            <li>
+                <a href="#">Page 3</a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href="#">
+            <i class="fas fa-image"></i>
+            Portfolio
+        </a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="fas fa-question"></i>
+            FAQ
+        </a>
+    </li>
+    <li>
+        <a href="#">
+            <i class="fas fa-paper-plane"></i>
+            Contact
+        </a>
+    </li>
+</ul>
 
-            <ul class="list-unstyled CTAs">
+<ul class="list-unstyled CTAs">
 
-            </ul>
-        </nav>
+</ul>
+</nav>

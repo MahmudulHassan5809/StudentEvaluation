@@ -5,6 +5,7 @@ from course.models import StudentCourse
 from accounts.models import Teacher, Student
 from django.contrib.auth.models import User
 from session.models import Semester
+from course.models import Course
 from django.views import View
 # Create your views here.
 
@@ -26,9 +27,11 @@ class StudentCourseSelect(AictiveStudentRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         course_select_form = CourseChoiceForm()
         active_semester = Semester.objects.filter(active=True).first()
+
         student_obj = get_object_or_404(Student, student=request.user.id)
-        my_courses = student_obj.student_course.filter(
-            student=student_obj).first()
+
+        my_courses = StudentCourse.objects.get(
+            student=student_obj, semester=active_semester)
 
         context = {
             'title': 'Select Course',
@@ -40,10 +43,11 @@ class StudentCourseSelect(AictiveStudentRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         course_select_form = CourseChoiceForm(request.POST)
+
         active_semester = Semester.objects.filter(active=True).first()
         student_obj = get_object_or_404(Student, student=request.user.id)
-        my_courses = student_obj.student_course.filter(
-            student=student_obj).first()
+        my_courses = StudentCourse.objects.get(
+            student=student_obj, semester=active_semester)
 
         context = {
             'title': 'Select Course',
@@ -52,17 +56,33 @@ class StudentCourseSelect(AictiveStudentRequiredMixin, View):
             'my_courses': my_courses
         }
         if course_select_form.is_valid():
+            semester_obj = get_object_or_404(
+                Semester, id=request.POST.get('semester'))
             student_course_allready_created = StudentCourse.objects.filter(
-                student=student_obj).first()
+                student=student_obj, semester=semester_obj).first()
             if student_course_allready_created:
                 for course_id in request.POST.getlist('courses'):
                     student_course_allready_created.courses.add(int(course_id))
             else:
                 student_course = StudentCourse.objects.create(
-                    student=student_obj)
+                    student=student_obj, semester=semester_obj)
                 for course_id in request.POST.getlist('courses'):
                     student_course.courses.add(int(course_id))
 
             return redirect('course:student_course_select')
         else:
             return render(request, 'accounts/student/course_select.html', context)
+
+
+class StudentPreviousCourse(AictiveStudentRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        previous_semester = Semester.objects.filter(active=False)
+        last_previous_semester = Semester.objects.filter(active=False).last()
+        courses = Course.objects.filter(semester=last_previous_semester)
+        print(courses)
+        context = {
+            'title': 'Course History',
+            'previous_semester': previous_semester,
+            'last_previous_semester': last_previous_semester
+        }
+        return render(request, 'accounts/student/previous_course.html', context)

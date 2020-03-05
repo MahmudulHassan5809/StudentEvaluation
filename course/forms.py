@@ -2,6 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.forms import MultipleChoiceField
 from course.models import Course, StudentCourse
+from session.models import Semester
 
 
 class CourseChoiceForm(ModelForm):
@@ -20,3 +21,5 @@ class CourseChoiceForm(ModelForm):
             queryset=Course.objects.filter(semester__active=True),
             required=True,
             widget=forms.CheckboxSelectMultiple)
+        self.fields['semester'] = forms.ModelChoiceField(
+            queryset=Semester.objects.filter(active=True))
