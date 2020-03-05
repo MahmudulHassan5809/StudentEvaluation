@@ -4,6 +4,10 @@
 {{title}}
 {% endblock title %}
 
+{% block sidebar %}
+    {% include '../../partials/teacher/_sidebar.html' %}
+{% endblock sidebar %}
+
 
 {% block maincontent %}
 <div class="container m-2 p-2">
@@ -19,7 +23,7 @@
 							<p class="card-text">
 								Course Credit : {{course.course.course_credit}} <br>
 								Department : {{course.course.department.department_name}} <br>
-								Faculty : {{ course.course.department.faculty.faculty_name }}	 
+								Faculty : {{ course.course.department.faculty.faculty_name }}
 							</p>
 							<a href="#" class="card-link btn-sm btn btn-info">Details</a>
 						</div>
@@ -27,9 +31,9 @@
 							<small class="text-dark">Semester {{course.course.semester.semester_full_name}}</small>
 						</div>
 					</div>
-				</div>	
+				</div>
 				{% endfor %}
-				
+
 			</div>
 		</div>
 	</div>

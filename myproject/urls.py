@@ -7,8 +7,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('accounts/', include('accounts.urls',namespace='accounts')),
+    path('course/', include('course.urls',namespace='course')),
     path('', include('pages.urls',namespace='pages')),
-    
+
 ]
 
 
