@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from .forms import SignUpForm, LoginForm
+from .forms import SignUpForm, LoginForm, UpdateProfile
 from django.utils.decorators import method_decorator
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
@@ -148,6 +148,17 @@ class StudentDashboard(AictiveStudentRequiredMixin, View):
             'title': 'Student Dashboard'
         }
         return render(request, 'accounts/student/student_dashboard.html', context)
+
+
+class MyProfile(AictiveUserRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        update_profile = UpdateProfile(request=request)
+        context = {
+            'title': 'My Profile',
+            'update_profile': update_profile
+
+        }
+        return render(request, 'accounts/my_profile.html', context)
 
 
 class LogoutView(AictiveUserRequiredMixin, View):

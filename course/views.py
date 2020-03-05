@@ -14,7 +14,7 @@ class TeacherCourses(AictiveTeacherRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         teacher = get_object_or_404(Teacher, teacher=request.user.id)
         teacher_courses = request.user.user_teacher.teacher_courses.filter(
-            teacher=teacher)
+            teachers=teacher)
 
         context = {
             'title': 'My Courses',
