@@ -534,3 +534,9 @@ a.article:hover {
   min-height: 460px;
 }
 /* End Profile css*/
+
+
+.errorlist {
+    list-style: none;
+    color: red;
+}

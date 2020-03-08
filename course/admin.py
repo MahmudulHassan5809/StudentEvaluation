@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Course, AssignTeacher, StudentCourse
+from django.utils.html import escape, mark_safe
+from .models import Course, AssignTeacher, StudentCourse, EvaluateStudent
 from session.models import Semester
 from programs.models import Department
 
@@ -54,10 +55,33 @@ admin.site.register(AssignTeacher, AssignTeacherAdmin)
 
 
 class StudentCourseAdmin(admin.ModelAdmin):
-    list_display = ["courses_name", "teachers_name","semester","student","active"]
-    search_fields = ["courses__course_name","student__student__username"]
+    list_display = ["courses_name", "teachers_name",
+                    "semester", "student", "active"]
+    search_fields = ["courses__course_name", "student__student__username"]
     list_editable = ["active"]
     list_per_page = 20
 
 
 admin.site.register(StudentCourse, StudentCourseAdmin)
+
+
+class EvaluateStudentAdmin(admin.ModelAdmin):
+    list_display = ["teacher", "student", "course", "answers_to_queations"]
+    list_per_page = 20
+
+    def answers_to_queations(self, obj):
+        results = []
+        for count, item in enumerate(obj.QUESTIONS):
+            if count == 0:
+                results.append(f'{item[1]} --> {obj.get_question1_display()}')
+            if count == 1:
+                results.append(f'{item[1]} --> {obj.get_question2_display()}')
+            if count == 2:
+                results.append(f'{item[1]} --> {obj.get_question3_display()}')
+
+        return mark_safe("<br>".join(p for p in results))
+
+    answers_to_queations.allow_tags = True
+
+
+admin.site.register(EvaluateStudent, EvaluateStudentAdmin)

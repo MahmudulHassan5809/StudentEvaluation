@@ -3,6 +3,7 @@ from programs.models import Department
 from accounts.models import Teacher, Student
 from session.models import Semester
 
+
 # Create your models here.
 
 
@@ -50,3 +51,55 @@ class StudentCourse(models.Model):
 
     def __str__(self):
         return self.student.student.username
+
+
+class EvaluateStudent(models.Model):
+    RATING = (
+        ('1', 'Poor'),
+        ('2', 'Average'),
+        ('3', 'Good'),
+        ('4', 'Very Good'),
+        ('5', 'Excellent')
+    )
+
+    CHOICES = (
+        ('1', 'Yes'),
+        ('2', 'Average'),
+        ('3', 'No')
+    )
+
+    QUESTIONS = (
+        ('1', 'Does the student participate fully in discussions and class activity?'),
+        ('2', 'Does the student thoughtfully participate in projects?'),
+        ('3', 'Is the student regular and punctual in class?')
+    )
+
+    teacher = models.ForeignKey(
+        Teacher, on_delete=models.CASCADE, related_name='teacher_evaluate')
+    student = models.ForeignKey(
+        Student, on_delete=models.CASCADE, related_name='student_evaluate')
+    course = models.ForeignKey(
+        Course, on_delete=models.CASCADE, related_name='course_evaluate')
+    question1 = models.CharField(max_length=255, choices=CHOICES, default='2')
+    question2 = models.CharField(max_length=255, choices=CHOICES, default='2')
+    question3 = models.CharField(max_length=255, choices=CHOICES, default='2')
+
+    rating = models.CharField(max_length=150, choices=RATING, default='3')
+    review = models.TextField(default='Review')
+
+    def __str__(self):
+        return self.teacher.teacher.username
+
+    # def answers_to_queations(self):
+    #     results = []
+    #     for count, item in enumerate(self.QUESTIONS):
+    #         if count == 0:
+    #             results.append(f'{item[1]} --> {self.get_question1_display()}')
+    #         if count == 1:
+    #             results.append(f'{item[1]} --> {self.get_question2_display()}')
+    #         if count == 2:
+    #             results.append(f'{item[1]} --> {self.get_question3_display()}')
+
+    #     return "<b>".join(p for p in results)
+
+    # answers_to_queations.allow_tags = True

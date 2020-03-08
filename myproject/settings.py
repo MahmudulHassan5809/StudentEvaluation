@@ -39,15 +39,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+
+
+
     'ckeditor',
     'ckeditor_uploader',
     'crispy_forms',
     'django_cleanup',
+
+
     'accounts',
     'session',
     'programs',
     'course',
-    'pages'
+    'pages',
 ]
 
 
@@ -90,6 +96,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
             ],
         },
     },

@@ -1,5 +1,6 @@
 {% extends "dash_base.html" %}
 
+
 {% block title %}
 {{title}}
 {% endblock title %}
@@ -14,6 +15,10 @@
         <div class="row">
             <div class="col-md-8 mx-auto">
                 <h3 class="text-center">Students List</h3>
+                <p class="text-center lead">
+                    Evaluate Students on {{course_obj.course_name}} <br>
+                    Semester <strong>{{semester_obj.semester_full_name}}</strong>
+                </p>
                 <hr>
 
                     <table class="table table-hover table-inverse">
@@ -28,7 +33,7 @@
                             <tr>
                                 <td>{{student.student.student.get_full_name}}</td>
                                 <td>
-                                    <a class="btn btn-sm btn-outline-info" href="">Evaluate</a>
+                                    <a class="btn btn-sm btn-outline-info" href="{% url 'course:evaluate_student' student_id=student.student.student.id course_id=course_obj.id semester_id=semester_obj.id  %}">Evaluate</a>
                                 </td>
                             </tr>
                             {% endfor %}
