@@ -1,0 +1,61 @@
+{% extends "dash_base.html" %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+{{title}}
+{% endblock title %}
+
+{% block sidebar %}
+{% include '../../partials/student/_sidebar.html' %}
+{% endblock sidebar %}
+
+
+
+
+{% block maincontent %}
+<div class="container m-2 p-2">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Jumbotron -->
+            <div class="jumbotron p-0">
+
+              <!-- Card image -->
+              <div class="view overlay rounded-top">
+                <img src="{{student_course_review.course.course_image.url}}" class="img-fluid" alt="{{student_course_review.course.course_name}}">
+                <a href="#">
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+          </div>
+
+          <!-- Card content -->
+          <div class="card-body text-center mb-3">
+
+            <!-- Title -->
+            <h3 class="card-title h3 my-4"><strong>{{student_course_review.course.course_name}}</strong></h3>
+            <!-- Text -->
+            <p class="card-text py-2">
+                Evaluated By : {{student_course_review.teacher.teacher.get_full_name}} <br>
+                Department : {{student_course_review.teacher.department.department_name}}
+                <hr>
+                Rating : {{student_course_review.get_rating_display}} <br>
+                Review : {{student_course_review.review}}
+                <hr>
+                {{student_course_review.review_details}}
+            </p>
+
+
+        </div>
+
+    </div>
+    <!-- Jumbotron -->
+
+
+</div>
+
+</div>
+</div>
+{% endblock maincontent %}

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.html import escape, mark_safe
 from programs.models import Department
 from accounts.models import Teacher, Student
 from session.models import Semester
@@ -90,16 +91,16 @@ class EvaluateStudent(models.Model):
     def __str__(self):
         return self.teacher.teacher.username
 
-    # def answers_to_queations(self):
-    #     results = []
-    #     for count, item in enumerate(self.QUESTIONS):
-    #         if count == 0:
-    #             results.append(f'{item[1]} --> {self.get_question1_display()}')
-    #         if count == 1:
-    #             results.append(f'{item[1]} --> {self.get_question2_display()}')
-    #         if count == 2:
-    #             results.append(f'{item[1]} --> {self.get_question3_display()}')
+    def review_details(self):
+        results = []
+        for count, item in enumerate(self.QUESTIONS):
+            if count == 0:
+                results.append(f'{item[1]} --> {self.get_question1_display()}')
+            if count == 1:
+                results.append(f'{item[1]} --> {self.get_question2_display()}')
+            if count == 2:
+                results.append(f'{item[1]} --> {self.get_question3_display()}')
 
-    #     return "<b>".join(p for p in results)
+        return mark_safe("<br>".join(p for p in results))
 
     # answers_to_queations.allow_tags = True

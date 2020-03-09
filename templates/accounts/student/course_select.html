@@ -39,6 +39,7 @@
                         <tr>
                             <th>Course Name</th>
                             <th>Course Teachers</th>
+                            <th>Check My Review</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -51,9 +52,9 @@
                             {% for course in course.course_teacher.all %}
                                 <td>
 
-                                        {% for teacher in course.teachers.all %}
-                                        {{teacher}},
-                                        {% endfor %}
+                                {% for teacher in course.teachers.all %}
+                                    {{teacher}}
+                                {% endfor %}
                                </td>
 
                             {% endfor %}
@@ -62,6 +63,9 @@
                                     No Teacher Selected
                                 </td>
                             {% endif %}
+                            <td>
+                                <a href="{% url 'course:view_student_course_review' course.id  %}" class="btn btn-sm btn-outline-primary">Review</a>
+                            </td>
                             <td>
                                 {% if  my_courses.active %}
                                    <i class="fa fa-check text-success"></i>

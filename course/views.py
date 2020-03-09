@@ -5,7 +5,7 @@ from course.models import StudentCourse
 from accounts.models import Teacher, Student
 from django.contrib.auth.models import User
 from session.models import Semester
-from course.models import Course
+from course.models import Course, EvaluateStudent
 from django.views import View
 # Create your views here.
 
@@ -57,6 +57,11 @@ class StudentEvaluateByTeacher(AictiveTeacherRequiredMixin, View):
         evaluate_form = EvaluateForm(
             student_obj=student_obj, teacher_obj=teacher_obj, course_obj=course_obj)
 
+        check_evaluation = EvaluateStudent.objects.filter(
+            teacher=teacher_obj, student=student_obj, course=course_obj).first()
+        if check_evaluation:
+            evaluate_form = EvaluateForm(instance=check_evaluation)
+
         context = {
             'title': 'Evaluate Student',
             'evaluate_form': evaluate_form,
@@ -72,6 +77,10 @@ class StudentEvaluateByTeacher(AictiveTeacherRequiredMixin, View):
         course_id = kwargs.get('course_id')
         semester_id = kwargs.get('semester_id')
 
+        student_obj = get_object_or_404(Student, student=student_id)
+        teacher_obj = get_object_or_404(Teacher, teacher=request.user.id)
+        course_obj = get_object_or_404(Course, id=course_id)
+
         evaluate_form = EvaluateForm(request.POST)
 
         context = {
@@ -83,8 +92,15 @@ class StudentEvaluateByTeacher(AictiveTeacherRequiredMixin, View):
 
         }
         if evaluate_form.is_valid():
+            check_evaluation = EvaluateStudent.objects.filter(
+                teacher=teacher_obj, student=student_obj, course=course_obj).first()
+            if check_evaluation:
+                evaluate_form = EvaluateForm(
+                    request.POST, instance=check_evaluation)
+            else:
+                evaluate_form = EvaluateForm(request.POST)
             save = evaluate_form.save()
-            print(save)
+            return render(request, 'accounts/teacher/evaluate_student.html', context)
         else:
             print('not okkkkkkkkkkkkkkkkkkkkkkkkkk')
             return render(request, 'accounts/teacher/evaluate_student.html', context)
@@ -150,13 +166,42 @@ class StudentCourseSelect(AictiveStudentRequiredMixin, View):
 
 class StudentPreviousCourse(AictiveStudentRequiredMixin, View):
     def get(self, request, *args, **kwargs):
+        semester_id = kwargs.get('semester_id')
+
+        if semester_id:
+            last_previous_semester = Semester.objects.filter(
+                id=semester_id, active=False).last()
+        else:
+            last_previous_semester = Semester.objects.filter(
+                active=False).last()
+
         previous_semester = Semester.objects.filter(active=False)
-        last_previous_semester = Semester.objects.filter(active=False).last()
         courses = Course.objects.filter(semester=last_previous_semester)
+
+        student_obj = get_object_or_404(Student, student=request.user.id)
+        last_semester_courses = StudentCourse.objects.get(
+            student=student_obj, semester=last_previous_semester)
 
         context = {
             'title': 'Course History',
             'previous_semester': previous_semester,
-            'last_previous_semester': last_previous_semester
+            'last_previous_semester': last_previous_semester,
+            'last_semester_courses': last_semester_courses
         }
         return render(request, 'accounts/student/previous_course.html', context)
+
+
+class StudentCourseReview(AictiveStudentRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        course_id = kwargs.get('id')
+        student_obj = get_object_or_404(Student, student=request.user.id)
+        course_obj = get_object_or_404(Course, id=course_id)
+
+        student_course_review = EvaluateStudent.objects.filter(
+            student=student_obj, course=course_obj).first()
+        context = {
+            'title': f"{student_obj}'s Review On {course_obj}",
+            'student_course_review': student_course_review,
+            'course_obj': course_obj
+        }
+        return render(request, 'accounts/student/course_review.html', context)
