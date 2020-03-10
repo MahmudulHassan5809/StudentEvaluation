@@ -1,6 +1,7 @@
 import os
 from django.contrib.messages import constants as messages
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -33,7 +34,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'baton',
     'django.contrib.admin',
+    #'baton.autodiscover',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -101,6 +104,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
@@ -177,3 +181,16 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'mahmudul.hassan240@gmail.com'
 EMAIL_HOST_PASSWORD = 'hmcdhmoeeajppomw'
 EMAIL_PORT = 587
+
+
+BATON = {
+    'SITE_HEADER': 'StudentEvaluation Admin',
+    'SITE_TITLE': 'StudentEvaluation Admin Portal',
+    'INDEX_TITLE': 'Welcome to StudentEvaluation Researcher Portal',
+    'SUPPORT_HREF': 'https://github.com/MahmudulHassan5809',
+    'COPYRIGHT': 'copyright © 2019 <a href="https://github.com/MahmudulHassan5809">Mahmudul Hassan</a>',  # noqa
+    'POWERED_BY': '<a href="https://github.com/MahmudulHassan5809">Mahmudul Hassan</a>',
+    'CONFIRM_UNSAVED_CHANGES': True,
+    'SHOW_MULTIPART_UPLOADING': True,
+    'ENABLE_IMAGES_PREVIEW': True,
+}
