@@ -13,8 +13,23 @@
 <div class="container m-2 p-2">
 	<div class="row">
 		<div class="col-md-12">
+			<h4 class="text-center">Your Courses In {{semester_obj.semester_full_name}}</h4>
+			<hr>
 			<div class="row">
-				{% for course in teacher_courses %}
+				<div class="col-md-3">
+					<ul class="list-group">
+						{% for semester in all_semester %}
+							<li class="list-group-item">
+								<a href="{% url 'course:teacher_courses' semester.id %}">
+									{{semester.semester_full_name}}
+								</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+				<div class="col-md-8">
+					<div class="row">
+						{% for course in teacher_courses %}
 				<div class="col-md-4">
 					<div class="card">
 						<img class="card-img-top" src="{{course.course.course_image.url}}">
@@ -33,6 +48,8 @@
 					</div>
 				</div>
 				{% endfor %}
+					</div>
+				</div>
 
 			</div>
 		</div>

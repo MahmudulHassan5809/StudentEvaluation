@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from accounts.mixins import AictiveUserRequiredMixin, AictiveTeacherRequiredMixin, AictiveStudentRequiredMixin
 from course.forms import CourseChoiceForm, EvaluateForm
-from course.models import StudentCourse
+from course.models import StudentCourse, AssignTeacher
 from accounts.models import Teacher, Student
 from django.contrib.auth.models import User
 from session.models import Semester
@@ -12,12 +12,25 @@ from django.views import View
 
 class TeacherCourses(AictiveTeacherRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        teacher = get_object_or_404(Teacher, teacher=request.user.id)
-        teacher_courses = request.user.user_teacher.teacher_courses.filter(
-            teachers=teacher)
+        semester_id = kwargs.get('semester_id')
+
+        if semester_id:
+            semester_obj = get_object_or_404(Semester, id=semester_id)
+        else:
+            semester_obj = Semester.objects.filter(active=True).first()
+
+        all_semester = Semester.objects.all().order_by('-active')
+
+        teacher_obj = get_object_or_404(Teacher, teacher=request.user.id)
+        teacher_courses = AssignTeacher.objects.filter(
+            teachers=teacher_obj, course__semester=semester_obj)
+        # teacher_courses = request.user.user_teacher.teacher_courses.filter(
+        #     teachers = teacher)
 
         context = {
             'title': 'My Courses',
+            'all_semester': all_semester,
+            'semester_obj': semester_obj,
             'teacher_courses': teacher_courses
         }
         return render(request, 'accounts/teacher/teacher_courses.html', context)
@@ -176,7 +189,7 @@ class StudentPreviousCourse(AictiveStudentRequiredMixin, View):
                 active=False).last()
 
         previous_semester = Semester.objects.filter(active=False)
-        courses = Course.objects.filter(semester=last_previous_semester)
+        # courses = Course.objects.filter(semester=last_previous_semester)
 
         student_obj = get_object_or_404(Student, student=request.user.id)
         last_semester_courses = StudentCourse.objects.get(

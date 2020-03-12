@@ -21,6 +21,7 @@ urlpatterns = [
 
 
     path('teacher/courses/', views.TeacherCourses.as_view(), name="teacher_courses"),
+    path('teacher/courses/<int:semester_id>', views.TeacherCourses.as_view(), name="teacher_courses"),
     path('teacher/course/details/<int:course_id>/<int:semester_id>',
          views.TeacherCourseDetails.as_view(), name="teacher_course_details"),
 
