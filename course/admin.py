@@ -58,6 +58,7 @@ class StudentCourseAdmin(admin.ModelAdmin):
     list_display = ["courses_name", "teachers_name",
                     "semester", "student", "active"]
     search_fields = ["courses__course_name", "student__student__username"]
+    list_filter = ["semester__semester_full_name"]
     list_editable = ["active"]
     list_per_page = 20
 

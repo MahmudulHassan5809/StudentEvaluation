@@ -233,6 +233,61 @@ BATON = {
                 },
             )
         },
+        {
+            'type': 'app',
+            'name': 'course',
+            'label': 'Course',
+            'icon': 'fa fa-university',
+            'models': (
+                {
+                    'name': 'assignteacher',
+                    'label': 'Assign Teachers'
+                },
+                {
+                    'name': 'course',
+                    'label': 'courses'
+                },
+                {
+                    'name': 'evaluatestudent',
+                    'label': 'Evaluate Students'
+                },
+                {
+                    'name': 'studentcourse',
+                    'label': 'Student Courses'
+                },
+            )
+        },
+        {
+            'type': 'app',
+            'name': 'programs',
+            'label': 'Programs',
+            'icon': 'fa fa-list',
+            'models': (
+                {
+                    'name': 'department',
+                    'label': 'Program'
+                },
+                {
+                    'name': 'faculty',
+                    'label': 'Department'
+                },
+
+            )
+        },
+        {
+            'type': 'app',
+            'name': 'session',
+            'label': 'Session',
+            'icon': 'fa fa-calendar-alt',
+            'models': (
+                {
+                    'name': 'semester',
+                    'label': 'Semester'
+                },
+
+
+            )
+        },
 
     ),
 }
