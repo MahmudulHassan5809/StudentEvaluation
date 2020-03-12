@@ -34,9 +34,13 @@ class SignUpForm(UserCreationForm):
         super(SignUpForm, self).__init__(*args, **kwargs)
         for fieldname in ['username', 'password1', 'password2']:
             self.fields[fieldname].help_text = None
-            self.fields['email'].required = True
-            self.fields['first_name'].required = True
-            self.fields['last_name'].required = True
+
+        self.fields['email'].required = True
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+
+        self.fields['department'].label = "Program"
+        self.fields['faculty'].label = "Department"
 
 
 class LoginForm(forms.Form):

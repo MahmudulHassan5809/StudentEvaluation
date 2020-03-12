@@ -22,7 +22,7 @@
 				<div class="login-key">
                     <img src="{% static 'front/img/logo-2.png' %}" alt="" width="60px">
                 </div>
-                
+
                 <div class="login-title">
                     Login
                 </div>
@@ -36,15 +36,18 @@
                         	{{ login_form.password|as_crispy_field }}
 
                         	<div class="loginbttm">
-			                    <div class="login-btm login-button">
+			                    <div class="login-btm login-button float-left">
 			                        <button type="submit" class="btn btn-outline-primary">Login</button>
 			                    </div>
+                                <div class="login-btm login-button float-right">
+                                    <a href="{% url 'password_reset' %}" class="btn btn-outline-primary">Forget Password</a>
+                                </div>
 			                </div>
                         </form>
                     </div>
                 </div>
 
-                
+
 			</div>
 		</div>
 	</div>

@@ -34,6 +34,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts',
+    'session',
+    'programs',
+    'course',
+    'pages',
+
     'baton',
     'django.contrib.admin',
     #'baton.autodiscover',
@@ -52,11 +58,7 @@ INSTALLED_APPS = [
     'django_cleanup',
 
 
-    'accounts',
-    'session',
-    'programs',
-    'course',
-    'pages',
+
 ]
 
 
@@ -193,4 +195,44 @@ BATON = {
     'CONFIRM_UNSAVED_CHANGES': True,
     'SHOW_MULTIPART_UPLOADING': True,
     'ENABLE_IMAGES_PREVIEW': True,
+    'MENU': (
+        {'type': 'title', 'label': 'main', 'apps': ('auth', )},
+        {
+            'type': 'app',
+            'name': 'auth',
+            'label': 'Authentication',
+            'icon': 'fa fa-lock',
+            'models': (
+                {
+                    'name': 'user',
+                    'label': 'Users'
+                },
+                {
+                    'name': 'group',
+                    'label': 'Groups'
+                },
+            )
+        },
+        {
+            'type': 'app',
+            'name': 'accounts',
+            'label': 'Accounts',
+            'icon': 'fa fa-user',
+            'models': (
+                {
+                    'name': 'profile',
+                    'label': 'Profiles'
+                },
+                {
+                    'name': 'teacher',
+                    'label': 'Teachers'
+                },
+                {
+                    'name': 'student',
+                    'label': 'Students'
+                },
+            )
+        },
+
+    ),
 }
