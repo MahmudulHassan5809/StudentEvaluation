@@ -4,15 +4,20 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from .forms import SignUpForm, LoginForm, UpdateProfile
+from pages.forms import WeatherCityForm
+from django.contrib.auth.forms import PasswordChangeForm
 from django.utils.decorators import method_decorator
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
+import requests
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from accounts.decorators import active_user_required
 from .mixins import AictiveUserRequiredMixin, AictiveTeacherRequiredMixin, AictiveStudentRequiredMixin
 from accounts.tokens import account_activation_token
+from pages.models import City
 from accounts.models import Teacher, Student
+from course.models import AssignTeacher
 from programs.models import Department, Faculty
 from django.views import View
 
@@ -136,8 +141,39 @@ class LoginView(View):
 
 class TeacherDashboard(AictiveTeacherRequiredMixin, View):
     def get(self, request, *args, **kwargs):
+        teacher_obj = get_object_or_404(Teacher, teacher=request.user.id)
+        teacher_courses_count = request.user.user_teacher.teacher_courses.filter(
+            teachers=teacher_obj).count()
+        url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=271d1234d3f497eed5b1d80a07b3fcd1'
+        city = 'Las Vegas'
+
+        cities = request.user.user_weather.all()
+        print(cities)
+
+        weather_data = []
+
+        for city in cities:
+            r = requests.get(url.format(city)).json()
+
+            city_weather = {
+                'city': city,
+                'temperature': r["main"]["temp"],
+                'feels_like': r["main"]["feels_like"],
+                'temp_min': r["main"]["temp_min"],
+                'temp_max': r["main"]["temp_max"],
+                'pressure': r["main"]["pressure"],
+                'humidity': r["main"]["humidity"],
+                'description': r["weather"][0]["description"],
+                'icon': r["weather"][0]["icon"],
+            }
+            weather_data.append(city_weather)
+
+        weather_city_form = WeatherCityForm()
         context = {
-            'title': 'Teacher Dashboard'
+            'title': 'Teacher Dashboard',
+            'teacher_courses_count': teacher_courses_count,
+            'weather_city_form': weather_city_form,
+            'weather_data': weather_data
         }
         return render(request, 'accounts/teacher/teacher_dashboard.html', context)
 
@@ -148,6 +184,24 @@ class StudentDashboard(AictiveStudentRequiredMixin, View):
             'title': 'Student Dashboard'
         }
         return render(request, 'accounts/student/student_dashboard.html', context)
+
+
+class WeatherCity(AictiveUserRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        weather_city_form = WeatherCityForm(request.POST)
+        if weather_city_form.is_valid():
+            save_form = weather_city_form.save(commit=False)
+            save_form.owner = request.user
+            save_form.save()
+            if request.user.user_profile.user_type == '0':
+                return redirect('accounts:teacher_dashboard')
+            elif request.user.user_profile.user_type == '1':
+                return redirect('accounts:student_dashboard')
+        else:
+            if request.user.user_profile.user_type == '0':
+                return redirect('accounts:teacher_dashboard')
+            elif request.user.user_profile.user_type == '1':
+                return redirect('accounts:student_dashboard')
 
 
 class MyProfile(AictiveUserRequiredMixin, View):
@@ -161,16 +215,55 @@ class MyProfile(AictiveUserRequiredMixin, View):
         return render(request, 'accounts/my_profile.html', context)
 
     def post(self, request, *args, **kwargs):
-        update_profile_form = UpdateProfile(request.POST, request=request)
-        context = {
-            'title': 'My Profile',
-            'update_profile_form': update_profile_form
-        }
 
-        if update_profile_form.is_valid():
-            pass
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        phone_number = request.POST.get('phone_number')
+        address = request.POST.get('address')
+        bio = request.POST.get('bio')
+        profile_image = request.FILES.get('profile_image')
+
+        if first_name:
+            request.user.first_name = first_name
+        if last_name:
+            request.user.last_name = last_name
+        if phone_number:
+            request.user.user_profile.phone_number = phone_number
+        if address:
+            request.user.user_profile.address = address
+        if bio:
+            request.user.user_profile.bio = bio
+        if profile_image:
+            request.user.user_profile.profile_pic = profile_image
+
+        request.user.save()
+        request.user.user_profile.save()
+
+        messages.success(request, "Profile Updated Successfully")
+        return redirect('accounts:my_profile')
+
+
+class ChangePassword(AictiveUserRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        chanage_password_form = PasswordChangeForm(user=request.user)
+        context = {
+            'chanage_password_form': chanage_password_form
+        }
+        return render(request, 'accounts/change_password.html', {'chanage_password_form': chanage_password_form})
+
+    def post(self, request, *args, **kwargs):
+        chanage_password_form = PasswordChangeForm(
+            data=request.POST, user=request.user)
+        context = {
+            'chanage_password_form': chanage_password_form
+        }
+        if chanage_password_form.is_valid():
+            chanage_password_form.save()
+            update_session_auth_hash(request, chanage_password_form.user)
+            messages.success(request, ('You have Changed Your Password...'))
+            return redirect('accounts:change_password')
         else:
-            return render(request, 'accounts/my_profile.html', context)
+            return render(request, 'accounts/change_password.html', {'chanage_password_form': chanage_password_form})
 
 
 class LogoutView(AictiveUserRequiredMixin, View):

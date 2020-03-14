@@ -1,5 +1,8 @@
 {% extends "dash_base.html" %}
 
+
+{% load crispy_forms_tags %}
+
 {% block title %}
     {{title}}
 {% endblock title %}
@@ -7,3 +10,58 @@
 {% block sidebar %}
     {% include '../../partials/teacher/_sidebar.html' %}
 {% endblock sidebar %}
+
+
+{% block maincontent %}
+    <div class="container m-2 p-2">
+        <div class="row">
+            <div class="col-md-12 mx-auto">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h4>Useful Links</h4>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-3">
+
+                            </div>
+                            <div class="col-md-3">Hello</div>
+                            <div class="col-md-3">Hello</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                        <div class="card-header">
+                                <form action="{% url 'accounts:weather_city' %}" method="POST">
+                                    {% csrf_token %}
+                                    {{weather_city_form|crispy}}
+                                    <button type="submit" class="btn btn-info btn-sm">Add</button>
+
+                                </form>
+                            </div>
+                            {% for city_weather in weather_data %}
+
+                            <div class="card-body">
+                                <img src="http://openweathermap.org/img/w/{{ city_weather.icon }}.png" alt="">
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-0 h5">{{ city_weather.temperature }}° F</p>
+                                    <p class="mb-0">Feels Like : {{city_weather.feels_like}}° F</p>
+                                </div>
+                                <h6 class="font-weight-bold mb-1">{{city_weather.city }}</h6>
+                                <p class="mb-0">{{ city_weather.description }}</p>
+                                <p class="mb-0">Max Temp : {{city_weather.temp_max}}° F</p>
+                                <p class="mb-0">Min Temp : {{city_weather.temp_min}}° F</p>
+                                <p class="mb-0">Humidity  : {{city_weather.humidity}}</p>
+
+                                <a href="" class="btn btn-danger">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                            <hr>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock maincontent %}
