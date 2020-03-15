@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'session',
     'programs',
     'course',
+    'boards',
     'pages',
 
     'baton',
@@ -56,7 +57,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'crispy_forms',
     'django_cleanup',
-
+    'widget_tweaks',
 
 
 ]
