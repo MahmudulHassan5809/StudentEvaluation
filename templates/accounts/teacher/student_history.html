@@ -1,0 +1,125 @@
+{% extends "dash_base.html" %}
+
+{% block title %}
+{{title}}
+{% endblock title %}
+
+{% block sidebar %}
+    {% include '../../partials/teacher/_sidebar.html' %}
+{% endblock sidebar %}
+
+
+{% block maincontent %}
+    <div class="container m-2 p-2">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="profile-card">
+                    <div class="img">
+                        <img src="{{student_obj.student.user_profile.profile_pic.url}}" alt="{{student_obj.student.get_full_name}}"  style="width:60%">
+                    </div>
+                    <h1>{{student_obj.student.get_full_name}}</h1>
+                    <p>{{student_obj.department.department_name}}</p>
+                    <p>{{student_obj.faculty.faculty_name}}</p>
+                    <p>Harvard University</p>
+                </div>
+               {% for history in student_history %}
+                <div class="card p-4">
+                    <div class="card-block">
+                        <h4 class="card-title text-center">{{history.semester.semester_full_name}}</h4>
+                        <h6 class="card-subtitle mb-2 text-muted text-center">{{history.course.course_name}}</h6>
+                        <div class="card-text px-5">
+                            <p class="text-center lead">
+                                Evaluted By : {{history.teacher.teacher.get_full_name}}
+                            </p>
+                            <hr>
+                            <p class="lead">
+                                <u><strong>Review</strong></u> <br>
+                                {{history.review}}
+                            </p>
+                            <p class="lead">
+                                <u><strong>Rating</strong></u> :
+                                {{history.get_rating_display}}
+                            </p>
+                            {{choice1}}
+                            {% if history.get_question1_display == 'Yes' %}
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:100%">
+                                        Free Space
+                                    </div>
+                                </div>
+                            {% elif history.get_question1_display == 'Average' %}
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:50%">
+                                    Free Space
+                                </div>
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width:50%">
+                                    Free Space
+                                </div>
+                            </div>
+                            {% elif history.get_question1_display == 'No' %}
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width:100%">
+                                        Free Space
+                                    </div>
+                                </div>
+
+                            {% endif %}
+
+                            {{choice2}}
+                            {% if history.get_question2_display == 'Yes' %}
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:100%">
+                                        Free Space
+                                    </div>
+                                </div>
+                            {% elif history.get_question2_display == 'Average' %}
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:50%">
+                                    Free Space
+                                </div>
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width:50%">
+                                    Free Space
+                                </div>
+                            </div>
+                            {% elif history.get_question2_display == 'No' %}
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width:100%">
+                                        Free Space
+                                    </div>
+                                </div>
+
+                            {% endif %}
+
+                            {{choice3}}
+                            {% if history.get_question3_display == 'Yes' %}
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:100%">
+                                        Free Space
+                                    </div>
+                                </div>
+                            {% elif history.get_question3_display == 'Average' %}
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:50%">
+                                    Free Space
+                                </div>
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width:50%">
+                                    Free Space
+                                </div>
+                            </div>
+                            {% elif history.get_question3_display == 'No' %}
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width:100%">
+                                        Free Space
+                                    </div>
+                                </div>
+
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock maincontent %}

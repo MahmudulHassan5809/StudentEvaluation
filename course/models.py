@@ -81,6 +81,8 @@ class EvaluateStudent(models.Model):
         Student, on_delete=models.CASCADE, related_name='student_evaluate')
     course = models.ForeignKey(
         Course, on_delete=models.CASCADE, related_name='course_evaluate')
+    semester = models.ForeignKey(
+        Semester, on_delete=models.CASCADE, related_name='semester_evaluate')
     question1 = models.CharField(max_length=255, choices=CHOICES, default='2')
     question2 = models.CharField(max_length=255, choices=CHOICES, default='2')
     question3 = models.CharField(max_length=255, choices=CHOICES, default='2')

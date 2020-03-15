@@ -26,6 +26,7 @@
                             <tr>
                                 <th>Student Name</th>
                                 <th>Evaluate Student</th>
+                                <th>Student History</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,6 +35,11 @@
                                 <td>{{student.student.student.get_full_name}}</td>
                                 <td>
                                     <a class="btn btn-sm btn-outline-info" href="{% url 'course:evaluate_student' student_id=student.student.student.id course_id=course_obj.id semester_id=semester_obj.id  %}">Evaluate</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm btn-outline-info" href="{% url 'course:student_history' student_id=student.student.student.id course_id=course_obj.id semester_id=semester_obj.id  %}">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
                                 </td>
                             </tr>
                             {% endfor %}

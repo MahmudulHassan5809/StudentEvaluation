@@ -119,6 +119,33 @@ class StudentEvaluateByTeacher(AictiveTeacherRequiredMixin, View):
             return render(request, 'accounts/teacher/evaluate_student.html', context)
 
 
+class StudentHistory(AictiveTeacherRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        student_id = kwargs.get('student_id')
+        course_id = kwargs.get('course_id')
+        semester_id = kwargs.get('semester_id')
+
+        student_obj = get_object_or_404(Student, student=student_id)
+
+        student_history = EvaluateStudent.objects.filter(student=student_obj)
+
+        choices = dict(EvaluateStudent.QUESTIONS)
+        choice1 = choices['1']
+        choice2 = choices['2']
+        choice3 = choices['3']
+
+        context = {
+            'title': f"{student_obj}'s History",
+            'student_history': student_history,
+            'choice1': choice1,
+            'choice2': choice2,
+            'choice3': choice3,
+            'student_obj': student_obj
+        }
+
+        return render(request, 'accounts/teacher/student_history.html', context)
+
+
 class StudentCourseSelect(AictiveStudentRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         course_select_form = CourseChoiceForm()
