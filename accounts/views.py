@@ -7,7 +7,6 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from .forms import SignUpForm, LoginForm, UpdateProfile, SendMailForm
-from pages.forms import WeatherCityForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.utils.decorators import method_decorator
 from django.contrib.sites.shortcuts import get_current_site
@@ -17,7 +16,6 @@ from django.template.loader import render_to_string
 from accounts.decorators import active_user_required
 from .mixins import AictiveUserRequiredMixin, AictiveTeacherRequiredMixin, AictiveStudentRequiredMixin
 from accounts.tokens import account_activation_token
-from pages.models import City
 from accounts.models import Teacher, Student
 from course.models import AssignTeacher, Course
 from programs.models import Department, Faculty
