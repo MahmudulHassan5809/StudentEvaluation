@@ -9,7 +9,6 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.utils.decorators import method_decorator
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
-import requests
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from accounts.decorators import active_user_required
@@ -144,36 +143,9 @@ class TeacherDashboard(AictiveTeacherRequiredMixin, View):
         teacher_obj = get_object_or_404(Teacher, teacher=request.user.id)
         teacher_courses_count = request.user.user_teacher.teacher_courses.filter(
             teachers=teacher_obj).count()
-        url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units=imperial&appid=271d1234d3f497eed5b1d80a07b3fcd1'
-        city = 'Las Vegas'
-
-        cities = request.user.user_weather.all()
-        print(cities)
-
-        weather_data = []
-
-        for city in cities:
-            r = requests.get(url.format(city)).json()
-
-            city_weather = {
-                'city': city,
-                'temperature': r["main"]["temp"],
-                'feels_like': r["main"]["feels_like"],
-                'temp_min': r["main"]["temp_min"],
-                'temp_max': r["main"]["temp_max"],
-                'pressure': r["main"]["pressure"],
-                'humidity': r["main"]["humidity"],
-                'description': r["weather"][0]["description"],
-                'icon': r["weather"][0]["icon"],
-            }
-            weather_data.append(city_weather)
-
-        weather_city_form = WeatherCityForm()
         context = {
             'title': 'Teacher Dashboard',
             'teacher_courses_count': teacher_courses_count,
-            'weather_city_form': weather_city_form,
-            'weather_data': weather_data
         }
         return render(request, 'accounts/teacher/teacher_dashboard.html', context)
 

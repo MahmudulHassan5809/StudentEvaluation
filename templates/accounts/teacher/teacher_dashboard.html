@@ -13,51 +13,157 @@
 
 
 {% block maincontent %}
-    <div class="container m-2 p-2">
+    <div class="container m-2 p-3">
         <div class="row">
             <div class="col-md-12 mx-auto">
                 <div class="row">
-                    <div class="col-md-3">
-                        <h4>Useful Links</h4>
+                    <div class="col-md-3 card ">
+                        <h4 class="text-center lead mt-2">Useful Links</h4>
                         <hr>
-                        <div class="row">
-                            <div class="col-md-3">
-
+                        <div class="row m-0 p-0">
+                            <div class="col-md-6">
+                                  <a target="_blank" href="https://www.indstate.edu/" class="btn btn-outline-warning btn-block">Get to know more about ISU</a>
                             </div>
-                            <div class="col-md-3">Hello</div>
-                            <div class="col-md-3">Hello</div>
+                            <div class="col-md-6">
+                                <a target="_blank" href="http://cs.indstate.edu/info/" class="btn btn-outline-danger btn-block">Computer Science program</a>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="row m-0 p-0">
+                            <div class="col-md-6">
+                                <a target="_blank" href="https://www.indstate.edu/cas/mathcs/math-math-ed" class="btn btn-outline-info btn-block">Math & Math Ed program details</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a target="_blank" href="https://blackboard.indstate.edu/" class="btn btn-outline-info btn-block">Check ISU Blackboard To Learn</a>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="row m-0 p-0">
+                            <div class="col-md-6">
+                                <a target="_blank" href="https://www2.indstate.edu/news/" class="btn btn-outline-dark btn-block">News of Indiana State University</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a target="_blank" href="http://cs.indstate.edu/acm/contests.html" class="btn btn-outline-success btn-block">CS Programming Contest details</a>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="card">
-                        <div class="card-header">
-                                <form action="{% url 'accounts:weather_city' %}" method="POST">
-                                    {% csrf_token %}
-                                    {{weather_city_form|crispy}}
-                                    <button type="submit" class="btn btn-info btn-sm">Add</button>
+                    <div class="col-md-4">
+                       <div class="card p-2">
+                            <canvas id="myChart" height="80vh" width="80vw"></canvas>
+                       </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="card p-2">
+                            <section id="weather_section">
 
-                                </form>
-                            </div>
-                            {% for city_weather in weather_data %}
-
-                            <div class="card-body">
-                                <img src="http://openweathermap.org/img/w/{{ city_weather.icon }}.png" alt="">
-                                <div class="d-flex justify-content-between">
-                                    <p class="mb-0 h5">{{ city_weather.temperature }}° F</p>
-                                    <p class="mb-0">Feels Like : {{city_weather.feels_like}}° F</p>
+                            <h1 id="location" class="info-text"></h1>
+                            <!-- <div class="button"><span class="unit">C</span><span id="exchange"><i class="fa fa-exchange" aria-hidden="true"></i></span><span class="unit">F</span></div> -->
+                            <div class="main-container">
+                                <div class="top">
+                                    <div class="canvas-description">
+                                        <canvas id="skycon" width="100" height="100"></canvas>
+                                        <p id="description" class="info-text"></p>
+                                    </div>
+                                    <!-- <div class="faces">
+                                        <p class="face"><i style="color:#fe5d5d" class="fa fa-frown-o" aria-hidden="true"></i></p>
+                                        <p class="face"><i style="color:#feae5d" class="fa fa-meh-o" aria-hidden="true"></i></p>
+                                        <p class="face"><i style="color:#5dfeae" class="fa fa-smile-o" aria-hidden="true"></i></p>
+                                        <p class="face"><i style="color:#5daefe" class="fa fa-frown-o" aria-hidden="true"></i></p>
+                                    </div> -->
+                                    <div class="scale-container">
+                                        <div class="scale">
+                                            <div id="fill"></div>
+                                        </div>
+                                        <span class="temp"><i class="fa fa-caret-left" aria-hidden="true"></i><p id="temp"></p></span>
+                                    </div>
                                 </div>
-                                <h6 class="font-weight-bold mb-1">{{city_weather.city }}</h6>
-                                <p class="mb-0">{{ city_weather.description }}</p>
-                                <p class="mb-0">Max Temp : {{city_weather.temp_max}}° F</p>
-                                <p class="mb-0">Min Temp : {{city_weather.temp_min}}° F</p>
-                                <p class="mb-0">Humidity  : {{city_weather.humidity}}</p>
 
-                                <a href="" class="btn btn-danger">
-                                    <i class="fa fa-times"></i>
-                                </a>
+                                <div class="info-row">
+                                    <canvas id="rain-canvas" width="30" height="30" title="Chance of rain"></canvas><span id="rain" class="small-info-text"></span>
+                                    <canvas id="wind-canvas" width="30" height="30" title="Wind speed"></canvas><span id="wind" class="small-info-text"></span>
+                                    <p id="app-temp" class="small-info-text"></p>
+                                </div>
                             </div>
-                            <hr>
-                            {% endfor %}
+                            <div class="forecast">
+                                <div class="day-container1 dc">
+                                    <div class="info">
+                                        <p class="day">
+                                        </p>
+                                        <canvas id="canvas1" width="50" height="50" class="mini-canvas"></canvas>
+                                        <span class="mini-temp">
+                                    </span>
+                                    </div>
+                                    <div class="mini-scale">
+                                        <div class="mini-fill">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="day-container2 dc">
+                                    <div class="info">
+
+                                        <p class="day">
+                                        </p>
+                                        <canvas id="canvas2" width="50" height="50" class="mini-canvas"></canvas>
+                                        <span class="mini-temp">
+                                    </span>
+                                    </div>
+
+                                    <div class="mini-scale">
+                                        <div class="mini-fill">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="day-container3 dc">
+                                    <div class="info">
+
+                                        <p class="day">
+                                        </p>
+                                        <canvas id="canvas3" width="50" height="50" class="mini-canvas"></canvas>
+                                        <span class="mini-temp">
+                                    </span>
+                                    </div>
+
+                                    <div class="mini-scale">
+                                        <div class="mini-fill">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="day-container4 dc">
+                                    <div class="info">
+
+                                        <p class="day">
+                                        </p>
+                                        <canvas id="canvas4" width="50" height="50" class="mini-canvas"></canvas>
+                                        <span class="mini-temp">
+                                    </span>
+                                    </div>
+
+                                    <div class="mini-scale">
+                                        <div class="mini-fill">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="day-container5 dc">
+                                    <div class="info">
+
+                                        <p class="day">
+                                        </p>
+                                        <canvas id="canvas5" width="50" height="50" class="mini-canvas"></canvas>
+                                        <span class="mini-temp">
+                                    </span>
+                                    </div>
+
+                                    <div class="mini-scale">
+                                        <div class="mini-fill">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                         </div>
                     </div>
                 </div>
