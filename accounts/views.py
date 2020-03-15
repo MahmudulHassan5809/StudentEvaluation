@@ -46,7 +46,7 @@ class RegisterView(View):
             user.user_profile.address = signup_form.cleaned_data.get('address')
             user.user_profile.user_type = signup_form.cleaned_data.get(
                 'user_type')
-            user.user_profile.bio = signup_form.cleaned_data.get('bio')
+            # user.user_profile.bio = signup_form.cleaned_data.get('bio')
             user.save()
             if signup_form.cleaned_data.get('user_type') == '0':
                 department_id = request.POST.get('department')
@@ -220,7 +220,7 @@ class MyProfile(AictiveUserRequiredMixin, View):
         last_name = request.POST.get('last_name')
         phone_number = request.POST.get('phone_number')
         address = request.POST.get('address')
-        bio = request.POST.get('bio')
+        # bio = request.POST.get('bio')
         profile_image = request.FILES.get('profile_image')
 
         if first_name:
@@ -231,8 +231,8 @@ class MyProfile(AictiveUserRequiredMixin, View):
             request.user.user_profile.phone_number = phone_number
         if address:
             request.user.user_profile.address = address
-        if bio:
-            request.user.user_profile.bio = bio
+        # if bio:
+        #     request.user.user_profile.bio = bio
         if profile_image:
             request.user.user_profile.profile_pic = profile_image
 

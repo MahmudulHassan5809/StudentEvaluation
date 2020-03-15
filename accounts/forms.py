@@ -13,7 +13,7 @@ class SignUpForm(UserCreationForm):
 
     phone_number = forms.CharField()
     address = forms.CharField()
-    bio = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 40}))
+    # bio = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 40}))
     user_type = forms.ChoiceField(choices=USERTYPE_CHOICES)
     department = forms.ModelChoiceField(queryset=Department.objects.all())
     faculty = forms.ModelChoiceField(queryset=Faculty.objects.all())
@@ -21,7 +21,7 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'phone_number',
-                  'bio', 'address', 'user_type', 'password1', 'password2', )
+                  'address', 'user_type', 'password1', 'password2', )
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -51,11 +51,11 @@ class LoginForm(forms.Form):
 class UpdateProfile(ModelForm):
     phone_number = forms.CharField()
     address = forms.CharField()
-    bio = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 40}))
+    # bio = forms.CharField(widget=forms.Textarea(attrs={'rows': 3, 'cols': 40}))
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'phone_number', 'bio', 'address',)
+        fields = ('first_name', 'last_name', 'phone_number','address',)
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)

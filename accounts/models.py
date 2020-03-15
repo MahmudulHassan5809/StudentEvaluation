@@ -19,7 +19,7 @@ class Profile(models.Model):
         upload_to="profile/%Y/%m/%d/", default="profile/default.png")
     phone_number = models.CharField(max_length=15, default='01xxxxxxxxxx')
     address = models.CharField(default='Your Address', max_length=255)
-    bio = models.TextField(default='Your Bio')
+    # bio = models.TextField(default='Your Bio')
     user_type = models.CharField(max_length=10, choices=USERTYPE_CHOICES)
     email_confirmed = models.BooleanField(default=False)
     active = models.BooleanField(default=False)
