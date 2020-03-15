@@ -55,7 +55,7 @@ class UpdateProfile(ModelForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'phone_number','address',)
+        fields = ('first_name', 'last_name', 'phone_number', 'address',)
 
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
@@ -69,3 +69,11 @@ class UpdateProfile(ModelForm):
         self.fields['last_name'].required = True
         self.fields['bio'].initial = user.user_profile.bio
         self.fields['address'].initial = user.user_profile.address
+
+
+class SendMailForm(forms.Form):
+    mail_from = forms.CharField(required=True)
+    mail_to = forms.CharField(required=True)
+    mail_subject = forms.CharField(required=True)
+    mail_message = forms.CharField(widget=forms.Textarea(
+        attrs={'rows': 3, 'cols': 40}), required=True)

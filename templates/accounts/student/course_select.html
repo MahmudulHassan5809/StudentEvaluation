@@ -54,6 +54,9 @@
 
                                 {% for teacher in course.teachers.all %}
                                     {{teacher}}
+                                    <a href="{% url 'accounts:send_mail' to=teacher.teacher.id  %}" class="btn btn-outline-primary btn-sm">
+                                        <i class="fa fa-envelope"></i>
+                                    </a>
                                 {% endfor %}
                                </td>
 

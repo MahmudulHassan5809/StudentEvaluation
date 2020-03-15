@@ -1,0 +1,34 @@
+{% extends "dash_base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+{{title}}
+{% endblock title %}
+
+
+{% load crispy_forms_tags %}
+
+{% block sidebar %}
+{% if user.user_profile.user_type == '0'  %}
+{% include 'partials/teacher/_sidebar.html' %}
+{% elif user.user_profile.user_type == '1' %}
+{% include 'partials/student/_sidebar.html' %}
+{% endif %}
+{% endblock sidebar %}
+
+
+{% block maincontent %}
+<div class="container m-2 p-2">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            {% include 'partials/_alert.html' %}
+            <form action="{% url 'accounts:send_mail' to=to_id %}" method="POST" novalidate>
+                {% csrf_token %}
+                {{send_mail_form|crispy}}
+                <input type="submit" value="Send Mail" class="btn btn-primary btn-md">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock maincontent %}

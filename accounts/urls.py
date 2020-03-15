@@ -29,4 +29,5 @@ urlpatterns = [
 
 
     path('logout/', views.LogoutView.as_view(), name='logout'),
+    path('send-mail/<int:to>/', views.SendMail.as_view(), name='send_mail'),
 ]

@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.core.mail import EmailMessage
+from django.core.mail import EmailMultiAlternatives
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from .forms import SignUpForm, LoginForm, UpdateProfile
+from .forms import SignUpForm, LoginForm, UpdateProfile, SendMailForm
 from pages.forms import WeatherCityForm
 from django.contrib.auth.forms import PasswordChangeForm
 from django.utils.decorators import method_decorator
@@ -16,7 +19,7 @@ from .mixins import AictiveUserRequiredMixin, AictiveTeacherRequiredMixin, Aicti
 from accounts.tokens import account_activation_token
 from pages.models import City
 from accounts.models import Teacher, Student
-from course.models import AssignTeacher
+from course.models import AssignTeacher, Course
 from programs.models import Department, Faculty
 from django.views import View
 
@@ -68,9 +71,9 @@ class RegisterView(View):
 
                 Student.objects.create(
                     student=user, department=department_obj, faculty=faculty_obj)
-            #raw_password = form.cleaned_data.get('password1')
-            #user = authenticate(username=user.username, password=raw_password)
-            #login(request, user)
+            # raw_password = form.cleaned_data.get('password1')
+            # user = authenticate(username=user.username, password=raw_password)
+            # login(request, user)
             current_site = get_current_site(request)
             subject = 'Activate Your MySite Account'
             message = render_to_string('acc_active_email.html', {
@@ -236,6 +239,60 @@ class ChangePassword(AictiveUserRequiredMixin, View):
             return redirect('accounts:change_password')
         else:
             return render(request, 'accounts/change_password.html', {'chanage_password_form': chanage_password_form})
+
+
+class SendMail(AictiveUserRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        to_id = kwargs.get('to')
+
+        if request.user.user_profile.user_type == '1':
+            teacher_obj = get_object_or_404(Teacher, teacher=to_id)
+            to = teacher_obj.teacher.email
+        elif request.user.user_profile.user_type == '0':
+            student_obj = get_object_or_404(Student, student=to_id)
+            to = student_obj.student.email
+
+        data = {
+            'mail_from': request.user.email,
+            'mail_to': to
+        }
+
+        send_mail_form = SendMailForm(initial=data)
+
+        context = {
+            'title': 'Send Mail',
+            'to_id': to_id,
+            'send_mail_form': send_mail_form
+        }
+
+        return render(request, 'accounts/send_mail.html', context)
+
+    def post(self, request, *args, **kwargs):
+        to_id = kwargs.get('to')
+        send_mail_form = SendMailForm(request.POST)
+
+        if send_mail_form.is_valid():
+            mail_from = send_mail_form.cleaned_data.get('mail_from')
+            mail_to = send_mail_form.cleaned_data.get('mail_to')
+            mail_subject = send_mail_form.cleaned_data.get('mail_subject')
+            mail_message = send_mail_form.cleaned_data.get('mail_message')
+            html_content = f'<p>From {mail_from}<br>To {mail_to}<br> Message: {mail_message}</p>'
+            email = EmailMessage(
+                mail_subject,
+                html_content,
+                mail_from,
+                [mail_to],
+            )
+            email.content_subtype = "html"
+            email.send()
+            messages.success(request, ('Mail Send Successfully...'))
+            return redirect('accounts:send_mail', to_id)
+        else:
+            context = {
+                'title': 'Send Mail',
+                'send_mail_form': send_mail_form
+            }
+            return render(request, 'accounts/send_mail.html', context)
 
 
 class LogoutView(AictiveUserRequiredMixin, View):

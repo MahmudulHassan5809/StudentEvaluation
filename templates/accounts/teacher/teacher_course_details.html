@@ -26,6 +26,7 @@
                             <tr>
                                 <th>Student Name</th>
                                 <th>Evaluate Student</th>
+                                <th>Send Mail</th>
                                 <th>Student History</th>
                             </tr>
                         </thead>
@@ -35,6 +36,11 @@
                                 <td>{{student.student.student.get_full_name}}</td>
                                 <td>
                                     <a class="btn btn-sm btn-outline-info" href="{% url 'course:evaluate_student' student_id=student.student.student.id course_id=course_obj.id semester_id=semester_obj.id  %}">Evaluate</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm btn-outline-primary" href="{% url 'accounts:send_mail' to=student.student.student.id  %}">
+                                        <i class="fa fa-envelope"></i>
+                                    </a>
                                 </td>
                                 <td>
                                     <a class="btn btn-sm btn-outline-info" href="{% url 'course:student_history' student_id=student.student.student.id course_id=course_obj.id semester_id=semester_obj.id  %}">
