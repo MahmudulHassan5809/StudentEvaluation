@@ -40,7 +40,8 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
+                           {% if user.is_authenticated %}
+                                <li class="nav-item active">
                                 <a class="nav-link" href="#">Page</a>
                             </li>
                             <li class="nav-item">
@@ -52,14 +53,31 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a>
                             </li>
+                            {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'boards:home' %}">Forum</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'accounts:login' %}">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'accounts:register' %}">Login</a>
+                            </li>
+                           {% endif %}
                         </ul>
                     </div>
                 </div>
             </nav>
 
-            {% block maincontent %}
+            <div class="container m-2 p-2">
+                <ol class="breadcrumb my-4">
+                    {% block breadcrumb %}
+                    {% endblock breadcrumb %}
+                </ol>
+                {% block maincontent %}
 
-            {% endblock maincontent %}
+                {% endblock maincontent %}
+            </div>
         </div>
 
     </div>

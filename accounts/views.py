@@ -177,6 +177,14 @@ class WeatherCity(AictiveUserRequiredMixin, View):
                 return redirect('accounts:student_dashboard')
 
 
+class Dashboard(AictiveUserRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        if request.user.user_profile.user_type == '0':
+            return redirect('accounts:teacher_dashboard')
+        elif request.user.user_profile.user_type == '1':
+            return redirect('accounts:student_dashboard')
+
+
 class MyProfile(AictiveUserRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         update_profile_form = UpdateProfile(request=request)

@@ -1,0 +1,62 @@
+{% extends "dash_base.html" %}
+{% load humanize %}
+
+{% block title %}
+  {{ title }}
+{% endblock title %}
+
+{% block sidebar %}
+{% if user.user_profile.user_type == '0'  %}
+{% include 'partials/teacher/_sidebar.html' %}
+{% elif user.user_profile.user_type == '1' %}
+{% include 'partials/student/_sidebar.html' %}
+{% endif %}
+{% endblock sidebar %}
+
+
+
+    {% block breadcrumb %}
+      <li class="breadcrumb-item"><a href="{% url 'boards:home' %}">Boards</a></li>
+      <li class="breadcrumb-item active">{{ board.name }}</li>
+
+    {% endblock breadcrumb %}
+
+    {% block maincontent %}
+        <div class="row">
+          <div class="col-md-12">
+            <div class="mb-4">
+            <a href="{% url 'boards:new_topic' board.pk %}" class="btn btn-primary">New topic</a>
+        </div>
+        <table class="table">
+            <thead class="thead-inverse">
+              <tr>
+                <th>Topic</th>
+                <th>Starter</th>
+                <th>Replies</th>
+                <th>Views</th>
+                <th>Last Update</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for topic in topics %}
+
+                <tr>
+                  <td><a href="{% url 'boards:topic_posts' board.pk topic.pk %}">{{ topic.subject }}</a></td>
+                  <td>{{ topic.starter.username }}</td>
+                  <td>
+                    {{ topic.replies }}
+                  </td>
+                  <td>
+                    {{ topic.views }}
+                  </td>
+                  <td>{{ topic.last_updated|naturaltime  }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+        {% include 'partials/pagination.html' %}
+          </div>
+        </div>
+
+    {% endblock maincontent %}

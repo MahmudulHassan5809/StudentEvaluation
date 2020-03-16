@@ -26,6 +26,7 @@ urlpatterns = [
          name="teacher_dashboard"),
 
 
+    path('dashboard/', views.Dashboard.as_view(), name='dashboard'),
 
 
     path('logout/', views.LogoutView.as_view(), name='logout'),

@@ -1,0 +1,47 @@
+{% extends "dash_base.html" %}
+{% load humanize %}
+
+{% block title %}
+  {{ title }}
+{% endblock title %}
+
+{% block sidebar %}
+{% if user.user_profile.user_type == '0'  %}
+{% include 'partials/teacher/_sidebar.html' %}
+{% elif user.user_profile.user_type == '1' %}
+{% include 'partials/student/_sidebar.html' %}
+{% endif %}
+{% endblock sidebar %}
+
+{% block style %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+{% endblock style %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'boards:home' %}">Boards</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'boards:board_topics' board.pk %}">{{ board.name }}</a></li>
+  <li class="breadcrumb-item active">New topic</li>
+{% endblock breadcrumb %}
+
+
+{% block maincontent %}
+    <div class="row">
+      <div class="col-md-12">
+        <form method="post" novalidate>
+        {% csrf_token %}
+
+       {% include 'partials/form.html' %}
+
+        <button type="submit" class="btn btn-success">Post</button>
+    </form>
+      </div>
+    </div>
+{% endblock maincontent %}
+
+
+{% block script %}
+  <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+  <script>
+    var simplemde = new SimpleMDE();
+  </script>
+{% endblock script %}

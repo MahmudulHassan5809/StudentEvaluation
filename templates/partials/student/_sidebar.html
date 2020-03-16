@@ -7,6 +7,12 @@
 
     <ul class="list-unstyled components">
         <li>
+            <a href="{% url 'accounts:dashboard' %}">
+                <i class="fa fa-user-circle"></i>
+                 Dashboard
+            </a>
+        </li>
+        <li>
            <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                 <i class="fa fa-list"></i>
                 Course
@@ -24,9 +30,9 @@
             </ul>
         </li>
     <li>
-        <a href="#">
-            <i class="fa fa-image"></i>
-            Portfolio
+        <a href="{% url 'boards:home' %}">
+            <i class="fa fa-share-square"></i>
+            Forum
         </a>
     </li>
 

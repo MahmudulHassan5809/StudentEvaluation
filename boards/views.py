@@ -20,29 +20,10 @@ from django.views.generic import ListView
 def home(request):
     boards = Board.objects.all()
     context = {
-        'title': 'Django Boards',
+        'title': 'ISU Forum',
         'boards': boards
     }
-    return render(request, 'home.html', context)
-
-
-def board_topics(request, pk):
-    board = get_object_or_404(Board, pk=pk)
-    queryset = board.topics.order_by(
-        '-last_updated').annotate(replies=Count('posts') - 1)
-    page = request.GET.get('page', 1)
-    paginator = Paginator(queryset, 20)
-    try:
-        topics = paginator.page(page)
-    except PageNotAnInteger:
-        topics = paginator.page(1)
-    except EmptyPage:
-        topics = paginator.page(paginator.num_pages)
-    context = {
-        'board': board,
-        'topics': topics
-    }
-    return render(request, 'topics.html', context)
+    return render(request, 'boards/home.html', context)
 
 
 @login_required(login_url="/accounts/login")
@@ -70,14 +51,14 @@ def new_topic(request, pk):
         'board': board,
         'form': form
     }
-    return render(request, 'new_topic.html', context)
+    return render(request, 'boards/new_topic.html', context)
 
 
 @method_decorator(login_required, name='dispatch')
 class PostUpdateView(UpdateView):
     model = Post
     fields = ('message', )
-    template_name = 'edit_post.html'
+    template_name = 'boards/edit_post.html'
     pk_url_kwarg = 'post_pk'
     context_object_name = 'post'
 
@@ -93,21 +74,10 @@ class PostUpdateView(UpdateView):
         return redirect('boards:topic_posts', pk=post.topic.board.pk, topic_pk=post.topic.pk)
 
 
-def topic_posts(request, pk, topic_pk):
-    topic = get_object_or_404(Topic, board__pk=pk, pk=topic_pk)
-    topic.views += 1
-    topic.save()
-    context = {
-        'title': topic.subject,
-        'topic': topic,
-    }
-    return render(request, 'topic_posts.html', context)
-
-
 class PostListView(ListView):
     model = Post
     context_object_name = 'posts'
-    template_name = 'topic_posts.html'
+    template_name = 'boards/topic_posts.html'
     paginate_by = 2
 
     def get_context_data(self, **kwargs):
@@ -143,14 +113,13 @@ def reply_topic(request, pk, topic_pk):
         'topic': topic,
         'form': form
     }
-    return render(request, 'reply_topic.html', context)
+    return render(request, 'boards/reply_topic.html', context)
 
 
-@method_decorator(login_required, name='dispatch')
 class TopicListView(ListView):
     model = Topic
     context_object_name = 'topics'
-    template_name = 'topics.html'
+    template_name = 'boards/topics.html'
     paginate_by = 20
 
     def get_context_data(self, **kwargs):
