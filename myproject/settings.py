@@ -290,6 +290,43 @@ BATON = {
 
             )
         },
+        {
+            'type': 'app',
+            'name': 'pages',
+            'label': 'Settings',
+            'icon': 'fa fa-image',
+            'models': (
+                {
+                    'name': 'sliderimage',
+                    'label': 'Slider Image'
+                },
+
+
+            )
+        },
+        {
+            'type': 'app',
+            'name': 'boards',
+            'label': 'Forum',
+            'icon': 'fa fa-keyboard',
+            'models': (
+                {
+                    'name': 'board',
+                    'label': 'Channel'
+                },
+                {
+                    'name': 'topic',
+                    'label': 'Topic'
+                },
+                {
+                    'name': 'post',
+                    'label': 'Post'
+                },
+
+
+            )
+        },
+
 
     ),
 }
