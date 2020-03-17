@@ -31,12 +31,12 @@ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.FORCE_STATIC_FILE_SERVING and not settings.DEBUG:
-    settings.DEBUG = True
-    urlpatterns += static(settings.STATIC_URL,
-                          document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
-    settings.DEBUG = False
+  settings.DEBUG = True
+  urlpatterns += static(settings.STATIC_URL,
+                        document_root=settings.STATIC_ROOT)
+  urlpatterns += static(settings.MEDIA_URL,
+                        document_root=settings.MEDIA_ROOT)
+  settings.DEBUG = False
 
 
 admin.site.site_header = "StudentEvaluation Admin"

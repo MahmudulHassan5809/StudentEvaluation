@@ -1,0 +1,65 @@
+{% extends "dash_base.html" %}
+{% load humanize %}
+
+{% block title %}
+  {{ title }}
+{% endblock title %}
+
+{% block sidebar %}
+{% if user.user_profile.user_type == '0'  %}
+{% include 'partials/teacher/_sidebar.html' %}
+{% elif user.user_profile.user_type == '1' %}
+{% include 'partials/student/_sidebar.html' %}
+{% endif %}
+{% endblock sidebar %}
+
+    {% block breadcrumb %}
+      <li class="breadcrumb-item active">{{title}}</li>
+    {% endblock breadcrumb %}
+
+        {% block maincontent %}
+
+            <div class="row">
+              <div class="col-md-12">
+                <table class="table table-light">
+            <thead class="table-dark">
+                <tr>
+                    <th>Board</th>
+                    <th>Topic</th>
+                    <th>Message</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for post in my_posts %}
+
+                <tr>
+                    <td>
+                        {{post.topic.board}}
+                    </td>
+                    <td>
+                     {{ post.topic.subject }}
+                   </td>
+                   <td class="align-middle">
+                     {{ post.get_message_as_markdown }}
+                   </td>
+                   <td>
+                      <a href="{% url 'boards:edit_post' post.topic.board.pk post.topic.pk post.pk %}" class="btn btn-primary btn-sm">
+                        <i class="fa fa-pencil"></i>
+                      </a>
+                   </td>
+                   <td>
+                      <a href="{% url 'boards:delete_post' post.pk %}" class="btn btn-danger btn-sm">
+                        <i class="fa fa-trash"></i>
+                      </a>
+                   </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+              </div>
+            </div>
+
+        {% endblock maincontent %}

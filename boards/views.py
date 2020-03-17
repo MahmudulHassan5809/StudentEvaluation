@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from .forms import NewTopicForm, PostForm
 from django.db.models import Count
 from django.utils import timezone
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Board, Topic, Post
 
@@ -13,6 +13,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.utils.decorators import method_decorator
 from django.views.generic import UpdateView
 from django.views.generic import ListView
+
+from django.views import View
 
 # Create your views here.
 
@@ -24,6 +26,17 @@ def home(request):
         'boards': boards
     }
     return render(request, 'boards/home.html', context)
+
+
+class MyPost(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        my_posts = Post.objects.filter(topic__starter=request.user)
+
+        context = {
+            'title': 'MyPosts',
+            'my_posts': my_posts
+        }
+        return render(request, 'boards/my_posts.html', context)
 
 
 @login_required(login_url="/accounts/login")
@@ -132,3 +145,11 @@ class TopicListView(ListView):
         queryset = self.board.topics.order_by(
             '-last_updated').annotate(replies=Count('posts') - 1)
         return queryset
+
+
+class DeletePost(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        post_id = kwargs.get('post_pk')
+        post = get_object_or_404(Post, id=post_id)
+        post.delete()
+        return redirect('boards:my_posts')
