@@ -131,6 +131,8 @@ class LoginView(View):
                     return redirect('accounts:teacher_dashboard')
                 elif user.user_profile.user_type == '1':
                     return redirect('accounts:student_dashboard')
+                elif request.user.is_staff:
+                    return redirect('admin:login')
             else:
                 messages.error(request, ('Invalid Credentials'))
                 return redirect('accounts:login')
