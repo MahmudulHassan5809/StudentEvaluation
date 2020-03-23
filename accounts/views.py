@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
+import json
 from django.core.mail import EmailMessage
 from django.core.mail import EmailMultiAlternatives
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
@@ -18,6 +19,7 @@ from .mixins import AictiveUserRequiredMixin, AictiveTeacherRequiredMixin, Aicti
 from accounts.tokens import account_activation_token
 from accounts.models import Teacher, Student
 from course.models import AssignTeacher, Course
+from session.models import Semester
 from programs.models import Department, Faculty
 from django.views import View
 
@@ -146,9 +148,24 @@ class TeacherDashboard(AictiveTeacherRequiredMixin, View):
         teacher_obj = get_object_or_404(Teacher, teacher=request.user.id)
         teacher_courses_count = request.user.user_teacher.teacher_courses.filter(
             teachers=teacher_obj).count()
+
+        semester_ids = Semester.objects.values_list('id', flat=True)
+        teacher_courses_count_dict = {}
+        for s_id in semester_ids:
+            semester_obj = get_object_or_404(Semester, id=s_id)
+            teacher_courses_count = AssignTeacher.objects.filter(
+                teachers=teacher_obj, course__semester=semester_obj).count()
+            semester_name = str(semester_obj.semester_full_name)
+
+            teacher_courses_count_dict[semester_obj.semester_full_name] = {
+                's_name': semester_obj.semester_full_name,
+                'c_count': teacher_courses_count
+            }
+
         context = {
             'title': 'Teacher Dashboard',
             'teacher_courses_count': teacher_courses_count,
+            'teacher_courses_count_dict': json.dumps(teacher_courses_count_dict)
         }
         return render(request, 'accounts/teacher/teacher_dashboard.html', context)
 

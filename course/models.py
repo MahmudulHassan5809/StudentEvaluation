@@ -15,7 +15,7 @@ class Course(models.Model):
         Department, on_delete=models.CASCADE, related_name='department_courses')
     course_name = models.CharField(max_length=150)
     course_code = models.CharField(max_length=150)
-    course_image = models.ImageField(upload_to="course/%Y/%m/%d/")
+    course_image = models.ImageField(upload_to="course/%Y/%m/%d/",default="course/default.png")
     course_credit = models.IntegerField()
 
     def __str__(self):

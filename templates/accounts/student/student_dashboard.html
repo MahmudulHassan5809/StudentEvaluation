@@ -13,6 +13,12 @@
         <div class="row">
             <div class="col-md-12 mx-auto">
                 <div class="row">
+                    <div class="col-md-12">
+                        <div class="jumbotron">
+                            <h1 class="display-3">Hello, {{user.get_full_name}}</h1>
+                            <p class="lead">Welcome To Dashboard</p>
+                        </div>
+                    </div>
                     {% include 'partials/dashboard_partial.html' %}
                 </div>
             </div>

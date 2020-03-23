@@ -19,6 +19,7 @@ from django.views import View
 # Create your views here.
 
 
+@login_required(login_url="/accounts/login")
 def home(request):
     boards = Board.objects.all()
     context = {
@@ -87,6 +88,7 @@ class PostUpdateView(UpdateView):
         return redirect('boards:topic_posts', pk=post.topic.board.pk, topic_pk=post.topic.pk)
 
 
+@method_decorator(login_required, name='dispatch')
 class PostListView(ListView):
     model = Post
     context_object_name = 'posts'
@@ -129,6 +131,7 @@ def reply_topic(request, pk, topic_pk):
     return render(request, 'boards/reply_topic.html', context)
 
 
+@method_decorator(login_required, name='dispatch')
 class TopicListView(ListView):
     model = Topic
     context_object_name = 'topics'
