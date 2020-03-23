@@ -1,0 +1,58 @@
+{% extends "dash_base.html" %}
+{% load humanize %}
+{% load static %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block sidebar %}
+{% if user.user_profile.user_type == '0'  %}
+{% include 'partials/teacher/_sidebar.html' %}
+{% elif user.user_profile.user_type == '1' %}
+{% include 'partials/student/_sidebar.html' %}
+{% endif %}
+{% endblock sidebar %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active">{{title}}</li>
+{% endblock breadcrumb %}
+
+{% block maincontent %}
+
+<div class="row">
+    <div class="col-md-12">
+
+
+        <h4 class="text-dark text-center">{{title}}</h4>
+        <h4 class="text-dark text-center">You Got {{total_correct_answer}} Points</h4>
+        <h4 class="text-center">
+            <a class="btn btn-outline-info btn-sm text-center" href="{% url 'quizes:re_try' %}">Retry</a>
+       </h4>
+        <ul class="list-group">
+            {% for key,value in request.session.answer.items %}
+            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center text-dark">
+                <div class="flex-column">
+                    <p class="text-dark">Question Name : {{value.Question}}</p>
+                    <p class="text-dark">Your Option : {{value.YourOption}}</p>
+                    <p class="text-dark">Correct Option : {{value.CorrectOption}}</p>
+                    <p class="text-dark">Status Option : {{value.status}}</p>
+
+                 </div>
+                <div class="image-parent">
+                    {% if value.status == 'Correct' %}
+                         <img src="{% static 'front/img/up.png' %}" class="img-fluid" alt="quixote" width="50px">
+                    {% else %}
+                        <img src="{% static 'front/img/down.png' %}" class="img-fluid" alt="quixote" width="60px">
+                    {% endif %}
+
+                </div>
+            </a>
+            {% endfor %}
+        </ul>
+
+
+  </div>
+</div>
+
+{% endblock maincontent %}

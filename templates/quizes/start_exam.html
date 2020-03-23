@@ -1,0 +1,80 @@
+{% extends "dash_base.html" %}
+{% load humanize %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block sidebar %}
+{% if user.user_profile.user_type == '0'  %}
+{% include 'partials/teacher/_sidebar.html' %}
+{% elif user.user_profile.user_type == '1' %}
+{% include 'partials/student/_sidebar.html' %}
+{% endif %}
+{% endblock sidebar %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active">{{title}}</li>
+{% endblock breadcrumb %}
+
+{% block maincontent %}
+
+<div class="row">
+    <div class="col-md-12">
+        <form action="{% url 'quizes:start_exam' topic_name=topic_name topic_id=topic_id %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="page" value="{{page}}">
+            <ul class="quiz">
+                {% for question in all_topic_question %}
+                <li>
+                    <h4>{{question.question_name}}</h4>
+                    <ul class="choices">
+                        {% for option in question.question_option.all %}
+                        <li>
+                            <label>
+                                <input type="radio" name="{{question.id}}" value="{{option.id}}">
+                                <span>{{option.option_name}}</span>
+                            </label>
+                        </li>
+                        {% endfor %}
+
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+            <input type="submit" value="Submit" class="btn btn-primary btn-sm">
+            <a style="display: none" id="view_answer" href="{% url "quizes:view_answer" topic_name=topic_name topic_id=topic_id  %}">Click To View Answer</a>
+        </form>
+
+        <div class="mr-auto ml-auto mt-4">
+            {% with all_topic_question as items %}
+            {% if items.has_other_pages %}
+                <nav aria-label="Page navigation example" class="">
+                    <ul class="pagination justify-content-left">
+                        {% if items.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page={{ items.previous_page_number }}">&laquo;</a></li>
+                        {% else %}
+                            <li class="page-item disabled"><a class="page-link" href="#"><span>&laquo;</span></a></li>
+                        {% endif %}
+                        {% for i in items.paginator.page_range %}
+                            {% if items.number == i %}
+                                <li class="page-item active"><a class="page-link" href="#">{{ i }} <span class="sr-only">(current)</span></a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if items.has_next %}
+                            <li class="page-item"><a class="page-link" href="?page={{ items.next_page_number }}">&raquo;</a></li>
+                        {% else %}
+                            <li class="page-item disabled" id="last"><a class="page-link" href="#"><span>&raquo;</span></a></li>
+
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        {% endwith %}
+        </div>
+    </div>
+</div>
+
+{% endblock maincontent %}

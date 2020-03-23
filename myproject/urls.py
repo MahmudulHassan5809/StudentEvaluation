@@ -13,6 +13,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('course/', include('course.urls', namespace='course')),
     path('forum/', include('boards.urls', namespace='boards')),
+    path('quizes/', include('quizes.urls', namespace='quizes')),
     path('', include('pages.urls', namespace='pages')),
 
     path('password_reset/', auth_views.PasswordResetView.as_view(),

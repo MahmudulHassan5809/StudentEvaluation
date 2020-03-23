@@ -874,3 +874,40 @@ a.article:hover {
 }
 
 /* Profile Card*/
+
+
+/* Quiz */
+
+.quiz,
+.choices {
+  list-style-type: none;
+  padding: 0;
+}
+
+.choices li {
+  margin-bottom: 5px;
+}
+
+.choices label {
+  display: flex;
+  align-items: center;
+}
+
+.choices label,
+input[type="radio"] {
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  margin-right: 8px;
+}
+
+
+/* Quiz */
+
+
+/* MCQ Answer List */
+.image-parent {
+  max-width: 40px;
+}
+/* MCQ Answer List */

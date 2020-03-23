@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'course',
     'boards',
     'pages',
+    'quizes',
 
     'baton',
     'django.contrib.admin',
@@ -103,7 +104,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'pages.context_processor.slider'
+                'pages.context_processor.slider',
+                'quizes.context_processor.total_correct_answer'
             ],
         },
     },
@@ -179,6 +181,9 @@ MEDIA_URL = '/media/'
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+
+ANSWER_SESSION_ID = 'answer'
+
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
@@ -302,6 +307,26 @@ BATON = {
                 },
 
 
+            )
+        },
+        {
+            'type': 'app',
+            'name': 'quizes',
+            'label': 'Quizes',
+            'icon': 'fa fa-question-circle',
+            'models': (
+                {
+                    'name': 'topic',
+                    'label': 'Topic'
+                },
+                {
+                    'name': 'question',
+                    'label': 'Question'
+                },
+                {
+                    'name': 'option',
+                    'label': 'Option'
+                },
             )
         },
         {
