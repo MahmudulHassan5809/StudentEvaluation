@@ -44,7 +44,80 @@
                 Rating : {{student_course_review.get_rating_display}} <br>
                 Review : {{student_course_review.review}}
                 <hr>
-                {{student_course_review.review_details}}
+                {{choice1}}
+                {% if student_course_review.get_question1_display == 'Yes' %}
+                    <div class="progress" style="height:30px">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:100%">
+                            Yes
+                        </div>
+                    </div>
+                {% elif student_course_review.get_question1_display == 'Average' %}
+                <div class="progress" style="height:30px">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:50%">
+                        Average
+                    </div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width:50%">
+                        Average
+                    </div>
+                </div>
+                {% elif student_course_review.get_question1_display == 'No' %}
+                    <div class="progress" style="height:30px">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width:100%">
+                            No
+                        </div>
+                    </div>
+
+                {% endif %}
+
+                {{choice2}}
+                {% if student_course_review.get_question2_display == 'Yes' %}
+                    <div class="progress" style="height:30px">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:100%">
+                            Yes
+                        </div>
+                    </div>
+                {% elif student_course_review.get_question2_display == 'Average' %}
+                <div class="progress" style="height:30px">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:50%">
+                        Average
+                    </div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width:50%">
+                        Average
+                    </div>
+                </div>
+                {% elif student_course_review.get_question2_display == 'No' %}
+                    <div class="progress" style="height:30px">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width:100%">
+                            No
+                        </div>
+                    </div>
+
+                {% endif %}
+
+                {{choice3}}
+                {% if student_course_review.get_question3_display == 'Yes' %}
+                    <div class="progress" style="height:30px">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:100%">
+                            Yes
+                        </div>
+                    </div>
+                {% elif student_course_review.get_question3_display == 'Average' %}
+                <div class="progress" style="height:30px">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width:50%">
+                       Average
+                    </div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width:50%">
+                        Average
+                    </div>
+                </div>
+                {% elif student_course_review.get_question3_display == 'No' %}
+                    <div class="progress" style="height:30px">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width:100%">
+                            No
+                        </div>
+                    </div>
+
+                {% endif %}
             </p>
 
 

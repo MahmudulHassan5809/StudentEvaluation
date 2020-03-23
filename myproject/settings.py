@@ -196,9 +196,9 @@ BATON = {
     'SITE_HEADER': 'StudentEvaluation Admin',
     'SITE_TITLE': 'StudentEvaluation Admin Portal',
     'INDEX_TITLE': 'Welcome to StudentEvaluation Researcher Portal',
-    'SUPPORT_HREF': 'https://github.com/MahmudulHassan5809',
-    'COPYRIGHT': 'copyright © 2019 <a href="https://github.com/MahmudulHassan5809">Mahmudul Hassan</a>',  # noqa
-    'POWERED_BY': '<a href="https://github.com/MahmudulHassan5809">Mahmudul Hassan</a>',
+    'SUPPORT_HREF': 'https://www.indstate.edu/',
+    'COPYRIGHT': 'copyright © 2019 <a href="https://www.indstate.edu/">Indiana State University</a>',  # noqa
+    'POWERED_BY': '<a href="https://www.indstate.edu"> Indiana State University</a>',
     'CONFIRM_UNSAVED_CHANGES': True,
     'SHOW_MULTIPART_UPLOADING': True,
     'ENABLE_IMAGES_PREVIEW': True,

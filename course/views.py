@@ -239,9 +239,17 @@ class StudentCourseReview(AictiveStudentRequiredMixin, View):
 
         student_course_review = EvaluateStudent.objects.filter(
             student=student_obj, course=course_obj).first()
+
+        choices = dict(EvaluateStudent.QUESTIONS)
+        choice1 = choices['1']
+        choice2 = choices['2']
+        choice3 = choices['3']
         context = {
             'title': f"{student_obj}'s Review On {course_obj}",
             'student_course_review': student_course_review,
-            'course_obj': course_obj
+            'course_obj': course_obj,
+            'choice1': choice1,
+            'choice2': choice2,
+            'choice3': choice3,
         }
         return render(request, 'accounts/student/course_review.html', context)
