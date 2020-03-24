@@ -13,7 +13,7 @@ class CourseAdmin(admin.ModelAdmin):
     search_fields = ('course_name', 'course_code',
                      'semester__semester_name', 'department__department_name',)
     list_filter = ['course_credit', 'course_code',
-                   'department__department_name', 'semester__semester_name']
+                   'department__department_name', 'semester__semester_full_name']
     autocomplete_fields = ('department',)
     #raw_id_fields = ("teacher",)
     list_per_page = 20

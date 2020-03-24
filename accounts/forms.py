@@ -67,7 +67,7 @@ class UpdateProfile(ModelForm):
         self.fields['last_name'].initial = user.last_name
         self.fields['first_name'].required = True
         self.fields['last_name'].required = True
-        self.fields['bio'].initial = user.user_profile.bio
+        # self.fields['bio'].initial = user.user_profile.bio
         self.fields['address'].initial = user.user_profile.address
 
 

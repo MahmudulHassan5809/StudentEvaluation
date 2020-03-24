@@ -18,7 +18,7 @@ from accounts.decorators import active_user_required
 from .mixins import AictiveUserRequiredMixin, AictiveTeacherRequiredMixin, AictiveStudentRequiredMixin
 from accounts.tokens import account_activation_token
 from accounts.models import Teacher, Student
-from course.models import AssignTeacher, Course
+from course.models import AssignTeacher, Course, StudentCourse
 from session.models import Semester
 from programs.models import Department, Faculty
 from django.views import View
@@ -146,8 +146,8 @@ class LoginView(View):
 class TeacherDashboard(AictiveTeacherRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         teacher_obj = get_object_or_404(Teacher, teacher=request.user.id)
-        teacher_courses_count = request.user.user_teacher.teacher_courses.filter(
-            teachers=teacher_obj).count()
+        # teacher_courses_count = request.user.user_teacher.teacher_courses.filter(
+        #     teachers=teacher_obj).count()
 
         semester_ids = Semester.objects.values_list('id', flat=True)
         teacher_courses_count_dict = {}
@@ -164,7 +164,6 @@ class TeacherDashboard(AictiveTeacherRequiredMixin, View):
 
         context = {
             'title': 'Teacher Dashboard',
-            'teacher_courses_count': teacher_courses_count,
             'teacher_courses_count_dict': json.dumps(teacher_courses_count_dict)
         }
         return render(request, 'accounts/teacher/teacher_dashboard.html', context)
@@ -172,8 +171,27 @@ class TeacherDashboard(AictiveTeacherRequiredMixin, View):
 
 class StudentDashboard(AictiveStudentRequiredMixin, View):
     def get(self, request, *args, **kwargs):
+        student_obj = get_object_or_404(Student, student=request.user.id)
+
+        semester_ids = Semester.objects.values_list('id', flat=True)
+        student_courses_count_dict = {}
+
+        for s_id in semester_ids:
+            semester_obj = get_object_or_404(Semester, id=s_id)
+            student_courses = StudentCourse.objects.get(
+                student=student_obj, semester=semester_obj)
+            student_courses_count = student_courses.courses.all().count()
+            semester_name = str(semester_obj.semester_full_name)
+
+            student_courses_count_dict[semester_obj.semester_full_name] = {
+                's_name': semester_obj.semester_full_name,
+                'c_count': student_courses_count
+            }
+
+        print(student_courses_count_dict)
         context = {
-            'title': 'Student Dashboard'
+            'title': 'Student Dashboard',
+            'student_courses_count_dict': json.dumps(student_courses_count_dict)
         }
         return render(request, 'accounts/student/student_dashboard.html', context)
 
