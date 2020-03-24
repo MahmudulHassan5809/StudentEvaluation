@@ -8,6 +8,10 @@
 	font-family: 'Poppins',sans-serif;
 }
 
+body {
+    padding-top: 65px;
+}
+
 .navbar .logo{
 	font-size: 1.5em;
 	text-transform: uppercase;

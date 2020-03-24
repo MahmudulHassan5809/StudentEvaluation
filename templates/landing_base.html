@@ -12,19 +12,29 @@
     {% include 'partials/_css.html' %}
 
     {% block style %}
-        
+
     {% endblock style %}
 </head>
 <body>
-        
-        {% include 'partials/_landing_nav.html' %} 
+
+        {% include 'partials/_landing_nav.html' %}
 
         {% block content %}
-              
-        {% endblock content %}  
+
+        {% endblock content %}
 
         {% include 'partials/_js.html' %}
-     
-    
+
+        <script>
+            function myMap() {
+            var mapProp= {
+              center:new google.maps.LatLng(51.508742,-0.120850),
+              zoom:5,
+            };
+            var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+            }
+        </script>
+
+
 </body>
 </html>

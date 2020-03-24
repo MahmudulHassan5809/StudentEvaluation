@@ -1,0 +1,120 @@
+
+{% extends "landing_base.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'front/css/landing_page.css' %}">
+{% endblock style %}
+
+{% block title %}
+{{title}}
+{% endblock title %}
+
+{% block content %}
+<div class="bg-light">
+    <div class="container py-5">
+        <div class="row h-100 align-items-center py-5">
+            <div class="col-lg-6">
+                <h1 class="display-4">About us page</h1>
+                <p class="lead text-muted mb-0">This student evaluation application is to help the teachers and students of Indiana State University.</p>
+                <p class="lead text-muted">Projet by <a href="javascript:void(0)" class="text-muted">
+                    <u>Mushfica Opsori</u></a>
+                </p>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block"><img src="https://res.cloudinary.com/mhmd/image/upload/v1556834136/illus_kftyh4.png" alt="" class="img-fluid"></div>
+        </div>
+    </div>
+</div>
+<div class="bg-white py-5">
+    <div class="container py-5">
+        <div class="row align-items-center mb-5">
+            <div class="col-lg-6 order-2 order-lg-1">
+                <i class="fa fa-bar-chart fa-2x mb-3 text-primary"></i>
+                <h2 class="font-weight-light">Student Evaluation</h2>
+                <p class="font-italic text-muted mb-4">A professor should get the chance to evaluate students at the end of the semester.Eventually, it will help the students to know more about their weak &amp; strong points. In addition,it will be helpful for other professors to know more about the students whom they are teaching so that they can make a proper strategy for teaching plans.</p>
+            </div>
+            <div class="col-lg-5 px-5 mx-auto order-1 order-lg-2"><img src="https://res.cloudinary.com/mhmd/image/upload/v1556834139/img-1_e25nvh.jpg" alt="" class="img-fluid mb-4 mb-lg-0"></div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-lg-5 px-5 mx-auto"><img src="https://res.cloudinary.com/mhmd/image/upload/v1556834136/img-2_vdgqgn.jpg" alt="" class="img-fluid mb-4 mb-lg-0"></div>
+            <div class="col-lg-6">
+                <i class="fa fa-leaf fa-2x mb-3 text-primary"></i>
+                <h2 class="font-weight-light">Student Evaluation</h2>
+                <p class="font-italic text-muted mb-4">A professor should get the chance to evaluate students at the end of the semester.Eventually, it will help the students to know more about their weak &amp; strong points. In addition,it will be helpful for other professors to know more about the students whom they are teaching so that they can make a proper strategy for teaching plans.</p>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bg-light py-5">
+    <div class="container py-5">
+        <div class="row mb-4">
+            <div class="col-lg-12">
+                <h2 class="display-4 font-weight-light text-center">Contact US</h2>
+                <p class="font-italic text-dark text-center">Studnet Evaluation Of ISU</p>
+            </div>
+        </div>
+        <div class="row text-center">
+
+            <div class="col-xl-6 col-sm-6 mb-5">
+                <div class="bg-white rounded shadow-sm py-5 px-4">
+                    <img src="{% static 'front/img/opshori.jpeg' %}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                    <h5 class="mb-0">Musfica Murshid Opshori</h5>
+                    <h6 class="mb-0">MS in Computer Science</h6>
+                    <h6 class="mb-0">Dept. of Math and Computer Science</h6>
+                    <h6 class="mb-0">Indiana State University, Terre Haute, IN 47809</h6>
+                    <h6 class="mb-0">AHD - ResLife IT Programming</h6>
+                    <h6 class="mb-0">mopshori@sycamores.indstate.edu</h6>
+                    <h6 class="mb-0">Phone : (812)298-5649</h6>
+
+                    <ul class="social mb-0 list-inline mt-3">
+                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-facebook-f"></i></a></li>
+                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+
+           <div class="col-xl-6 col-sm-6 mb-5">
+                <div class="bg-white rounded shadow-sm py-5 px-4">
+                    <img src="{% static 'front/img/opshori.jpeg' %}" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                    <h5 class="mb-0">Arash Rafiey</h5>
+                    <h6 class="mb-0">Assistant professor at department of Math and Computer Science</h6>
+                    <h6 class="mb-0">Dept. of Math and Computer Science</h6>
+                    <h6 class="mb-0">Indiana State University, Terre Haute, IN 47809</h6>
+                    <h6 class="mb-0">arash.rafiey@indstate.edu</h6>
+                    <h6 class="mb-0">mopshori@sycamores.indstate.edu</h6>
+                    <h6 class="mb-0">Phone : (812)237-2143</h6>
+
+                    <ul class="social mb-0 list-inline mt-3">
+                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-facebook-f"></i></a></li>
+                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="bg-light">
+   <div class="container">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h4 class="text-dark text-center">ISU Location</h4>
+                <hr>
+                <div class="mapouter"><div class="gmap_canvas"><iframe width="100%" height="597" id="gmap_canvas" src="https://maps.google.com/maps?q=Indiana%20State%20University&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div></div>
+            </div>
+        </div>
+   </div>
+</div>
+<footer class="bg-light pb-5">
+    <div class="container text-center">
+        <p class="font-italic text-muted mb-0">&copy; Copyrights ISU.com All rights reserved.</p>
+    </div>
+</footer>
+{% endblock content %}
+

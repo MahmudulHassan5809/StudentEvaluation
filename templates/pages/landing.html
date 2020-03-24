@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="{% static 'front/css/landing_page.css' %}">
 {% endblock style %}
 
+{% block title %}
+    {{title}}
+{% endblock title %}
+
 {% block content %}
-	{% include 'partials/_landing_header.html' %}   
+	{% include 'partials/_landing_header.html' %}
 {% endblock content %}
