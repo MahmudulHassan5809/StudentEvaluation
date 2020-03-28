@@ -5,7 +5,7 @@ from django.views import View
 class LandingView(View):
 	def get(self,request,*args,**kwargs):
 		context = {
-			'title' : 'Welcome To Our ISU Student Evaluation'
+			'title' : 'ISU Student Evaluation'
 		}
 		return render(request,'pages/landing.html',context)
 

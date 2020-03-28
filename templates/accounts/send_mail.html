@@ -1,10 +1,17 @@
 {% extends "dash_base.html" %}
 
+
+{% load static %}
 {% load crispy_forms_tags %}
+
 
 {% block title %}
 {{title}}
 {% endblock title %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'front/css/send_mail.css' %}">
+{% endblock style %}
 
 
 {% load crispy_forms_tags %}
@@ -20,15 +27,52 @@
 
 {% block maincontent %}
 
+<div class="wrap">
     <div class="row">
         <div class="col-md-8 mx-auto">
             {% include 'partials/_alert.html' %}
-            <form action="{% url 'accounts:send_mail' to=to_id %}" method="POST" novalidate>
+            <form action="{% url 'accounts:send_mail' to=to_id %}" method="POST" novalidate class="cool-b4-form" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{send_mail_form|crispy}}
-                <input type="submit" value="Send Mail" class="btn btn-primary btn-md">
-            </form>
-        </div>
+                <h2 class="text-center pt-4">Send Mail</h2>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ send_mail_form.mail_from|as_crispy_field }}
+                            <span class="input-highlight"></span>
+                        </div>
+
+                        <div class="form-group">
+                            {{ send_mail_form.mail_to|as_crispy_field }}
+                            <span class="input-highlight"></span>
+                        </div>
+                        <div class="form-group">
+                            {{ send_mail_form.mail_subject|as_crispy_field }}
+                            <span class="input-highlight"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ send_mail_form.mail_message|as_crispy_field }}
+                            <span class="input-highlight"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-6">
+
+                    {{ send_mail_form.mail_attachment|as_crispy_field }}
+
+                </div>
+            </div>
+            <div class="col-md-12 my-3">
+                <button type="submit" class="btn btn-lg btn-danger btn-block">Send</button>
+            </div>
+        </form>
     </div>
+</div>
+</div>
+
 
 {% endblock maincontent %}

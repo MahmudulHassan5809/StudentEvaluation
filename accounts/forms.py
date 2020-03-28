@@ -76,4 +76,6 @@ class SendMailForm(forms.Form):
     mail_to = forms.CharField(required=True)
     mail_subject = forms.CharField(required=True)
     mail_message = forms.CharField(widget=forms.Textarea(
-        attrs={'rows': 3, 'cols': 40}), required=True)
+        attrs={'rows': 9, 'cols': 40}), required=True)
+    mail_attachment = forms.FileField(
+        widget=forms.ClearableFileInput(attrs={'multiple': True}))

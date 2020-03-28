@@ -4,6 +4,7 @@ from django.core.mail import send_mail
 import json
 from django.core.mail import EmailMessage
 from django.core.mail import EmailMultiAlternatives
+from django.template import Context
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
@@ -312,28 +313,44 @@ class SendMail(AictiveUserRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         to_id = kwargs.get('to')
-        send_mail_form = SendMailForm(request.POST)
+        send_mail_form = SendMailForm(request.POST, request.FILES)
 
         if send_mail_form.is_valid():
             mail_from = send_mail_form.cleaned_data.get('mail_from')
             mail_to = send_mail_form.cleaned_data.get('mail_to')
             mail_subject = send_mail_form.cleaned_data.get('mail_subject')
             mail_message = send_mail_form.cleaned_data.get('mail_message')
-            html_content = f'<p>From {mail_from}<br>To {mail_to}<br> Message: {mail_message}</p>'
-            email = EmailMessage(
-                mail_subject,
-                html_content,
-                mail_from,
-                [mail_to],
-            )
-            email.content_subtype = "html"
-            email.send()
+
+            attachments = request.FILES.getlist('mail_attachment')
+
+            ctx = {
+                'mail_from': mail_from,
+                'mail_to': mail_to,
+                'mail_subject': mail_subject,
+                'mail_message': mail_message
+
+            }
+
+            subject, from_email, to = mail_subject, mail_from, mail_to
+
+            text_content = render_to_string(
+                'mail/email.txt', ctx)
+            html_content = render_to_string(
+                'mail/email.html', ctx)
+
+            msg = EmailMultiAlternatives(
+                mail_subject, mail_message, mail_from, [mail_to])
+            msg.attach_alternative(html_content, "text/html")
+            for name in attachments:
+                msg.attach(name.name, name.read(), name.content_type)
+            msg.send()
             messages.success(request, ('Mail Send Successfully...'))
             return redirect('accounts:send_mail', to_id)
         else:
             context = {
                 'title': 'Send Mail',
-                'send_mail_form': send_mail_form
+                'send_mail_form': send_mail_form,
+                'to_id': to_id
             }
             return render(request, 'accounts/send_mail.html', context)
 

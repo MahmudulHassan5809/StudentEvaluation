@@ -1,0 +1,8 @@
+Hello, dear {{ mail_to }}!
+
+You Have New Mail From {{mail_from}}
+-----------------------------------------
+{{mail_message}}
+
+---
+Best regards, ISU Student Evaluation!

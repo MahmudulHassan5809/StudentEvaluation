@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{mail_subject}}</title>
+    <style>
+        h3,h4{
+            text-align: center;
+            color: black
+        }
+        p{
+            background: gray;
+            font-size: 20px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h3>Subject: {{mail_subject}}</h4>
+    <hr>
+    <h4>Mail From : {{mail_from}}</h6>
+    <h6>Mail To : {{mail_to}}</h6>
+    <hr>
+    <p>
+        {{mail_message}}
+    </p>
+</body>
+</html>
