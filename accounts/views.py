@@ -101,7 +101,7 @@ def activate(request, uidb64, token):
         user.user_profile.email_confirmed = True
         user.user_profile.save()
         messages.success(
-            request, ('Thank You For Confirm The Email.Your Account Will Be Activated Soon'))
+            request, ('Thank You For Confirming The Email.Your Account Will Be Activated Soon'))
         return redirect('accounts:login')
     else:
         messages.success(request, ('Activation link is invalid!'))
@@ -152,11 +152,15 @@ class TeacherDashboard(AictiveTeacherRequiredMixin, View):
 
         semester_ids = Semester.objects.values_list('id', flat=True)
         teacher_courses_count_dict = {}
+        
         for s_id in semester_ids:
             semester_obj = get_object_or_404(Semester, id=s_id)
-            teacher_courses_count = AssignTeacher.objects.filter(
-                teachers=teacher_obj, course__semester=semester_obj).count()
-            semester_name = str(semester_obj.semester_full_name)
+            try:
+                teacher_courses_count = AssignTeacher.objects.filter(
+                    teachers=teacher_obj, course__semester=semester_obj).count()
+                semester_name = str(semester_obj.semester_full_name)
+            except Exception as e:
+                teacher_courses_count = None
 
             teacher_courses_count_dict[semester_obj.semester_full_name] = {
                 's_name': semester_obj.semester_full_name,
@@ -179,10 +183,15 @@ class StudentDashboard(AictiveStudentRequiredMixin, View):
 
         for s_id in semester_ids:
             semester_obj = get_object_or_404(Semester, id=s_id)
-            student_courses = StudentCourse.objects.get(
-                student=student_obj, semester=semester_obj)
-            student_courses_count = student_courses.courses.all().count()
-            semester_name = str(semester_obj.semester_full_name)
+
+            try:
+                student_courses = StudentCourse.objects.get(
+                    student=student_obj, semester=semester_obj)
+                student_courses_count = student_courses.courses.all().count()
+                semester_name = str(semester_obj.semester_full_name)
+            except Exception as e:
+                student_courses_count = None
+
 
             student_courses_count_dict[semester_obj.semester_full_name] = {
                 's_name': semester_obj.semester_full_name,
