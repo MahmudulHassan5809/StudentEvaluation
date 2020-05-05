@@ -152,7 +152,7 @@ class TeacherDashboard(AictiveTeacherRequiredMixin, View):
 
         semester_ids = Semester.objects.values_list('id', flat=True)
         teacher_courses_count_dict = {}
-        
+
         for s_id in semester_ids:
             semester_obj = get_object_or_404(Semester, id=s_id)
             try:
