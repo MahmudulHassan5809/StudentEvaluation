@@ -20,6 +20,8 @@ jQuery(document).ready(function($) {
             data.push(teacher_courses_count_dict[key].c_count);
         }
 
+        console.log(labels)
+
         new Chart(document.getElementById("bar-chart"), {
             type: 'bar',
             data: {

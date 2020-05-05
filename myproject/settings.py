@@ -52,34 +52,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
 
-
-
-
-    'ckeditor',
-    'ckeditor_uploader',
     'crispy_forms',
     'django_cleanup',
     'widget_tweaks',
-
-
 ]
 
 
 JQUERY_URL = True
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-
-CKEDITOR_UPLOAD_PATH = "ck_editor/"
-CKEDITOR_RESTRICT_BY_USER = True
-
-
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'full',
-        'width': '100%'
-    }
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
