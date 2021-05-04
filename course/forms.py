@@ -50,7 +50,7 @@ class EvaluateForm(ModelForm):
 
     class Meta:
         model = EvaluateStudent
-        fields = ('teacher', 'student', 'course',
+        fields = ('teacher', 'student', 'semester', 'course',
                   'question1', 'question2', 'question3', 'review', 'rating',)
         # widgets = {
         #     'question': forms.RadioSelect(attrs={"required": "required"}),
@@ -60,14 +60,17 @@ class EvaluateForm(ModelForm):
         student_obj = kwargs.pop('student_obj', None)
         teacher_obj = kwargs.pop('teacher_obj', None)
         course_obj = kwargs.pop('course_obj', None)
+        semester_obj = kwargs.pop('semester_obj', None)
         super(EvaluateForm, self).__init__(*args, **kwargs)
 
         if student_obj:
-            self.fields['student'].initial = student_obj
+            self.fields['student'].initial = student_obj.student
         if teacher_obj:
             self.fields['teacher'].initial = teacher_obj
         if course_obj:
             self.fields['course'].initial = course_obj
+        if semester_obj:
+            self.fields['semester'].initial = semester_obj
 
         self.fields['question1'].label = "Does the student participate fully in discussions and class activity?"
         self.fields['question2'].label = "Does the student thoughtfully participate in projects?"
