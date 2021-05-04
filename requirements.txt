@@ -30,7 +30,7 @@ python-creole==1.4.6
 pytz==2019.3
 regex==2020.2.20
 requests==2.23.0
-rsa==4.0
+rsa==4.7
 six==1.14.0
 smartypants==2.0.1
 sqlparse==0.3.0
